@@ -15,7 +15,7 @@ class AntrianController extends Controller
             'nomorkartu' => 'required',
             'nik' => 'required',
             'nomorrm' => 'required',
-            'notlp' => 'required',
+            'notelp' => 'required',
             'tanggalperiksa' => 'required',
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
@@ -41,7 +41,39 @@ class AntrianController extends Controller
 
         if ($checkAntrian==null){
             $new = new AntrianOnlineModel();
-                $new->ID = "";
+                $new->ID = AntrianOnlineModel::generateNOMOR();
+                $new->NOMOR_KARTU = $request->nomorkartu;
+                $new->NIK = $request->nik;
+                $new->NOMOR_RM = $request->nomorrm;
+                $new->NO_TELP = $request->notelp;
+                $new->TANGGAL_PERIKSA = $request->tanggalperiksa;
+                $new->KODE_POLI = $request->kodepoli;
+                $new->NOMOR_REFERENSI = $request->nomorreferensi;
+                $new->JENIS_REFERENSI = $request->jenisreferensi;
+                $new->JENIS_REQUEST = $request->jenisrequest;
+                $new->POLI_EKSEKUTIF = $request->polieksekutif;
+                $new->NOMOR = rand(1,20);
+                $new->TANGGAL = now();
+            $new->save();
+            $checkAntrian = AntrianOnlineModel::where([
+                "NOMOR_KARTU" => $request->nomorkartu,
+                "KODE_POLI" => $request->kodepoli,
+                "TANGGAL_PERIKSA" => $request->tanggalperiksa
+            ])->first();
         }
+
+        return response()->json([
+            "metadata" => [
+                "status" => 200,
+                "message" => "OK"
+            ],"response" =>[
+                "nomorantrean" => $checkAntrian->NOMOR,
+                "kodebooking" => $checkAntrian->ID,
+                "jenisantrean" => $checkAntrian->JENIS_REFERENSI,
+                "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA),
+                "namapoli" => "",
+                "namadokter" => "",
+            ]
+        ]);
     }
 }
