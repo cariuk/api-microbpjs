@@ -49,7 +49,7 @@ class TokenController extends Controller{
         return response()->json([
             "metadata" => [
                 "status" => 200,
-                "message" => "OK"
+                "message" => "Ok"
             ],"response" =>[
                 "token" => $tokenResult->accessToken,
             ]

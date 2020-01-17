@@ -33,6 +33,7 @@ class AntrianController extends Controller
             ],422);
         }
 
+        /*Check Data Antrian*/
         $checkAntrian = AntrianOnlineModel::where([
             "NOMOR_KARTU" => $request->nomorkartu,
             "KODE_POLI" => $request->kodepoli,
@@ -55,6 +56,8 @@ class AntrianController extends Controller
                 $new->NOMOR = rand(1,20);
                 $new->TANGGAL = now();
             $new->save();
+
+            /*Check Again*/
             $checkAntrian = AntrianOnlineModel::where([
                 "NOMOR_KARTU" => $request->nomorkartu,
                 "KODE_POLI" => $request->kodepoli,
@@ -65,7 +68,7 @@ class AntrianController extends Controller
         return response()->json([
             "metadata" => [
                 "status" => 200,
-                "message" => "OK"
+                "message" => "Ok"
             ],"response" =>[
                 "nomorantrean" => $checkAntrian->NOMOR,
                 "kodebooking" => $checkAntrian->ID,
