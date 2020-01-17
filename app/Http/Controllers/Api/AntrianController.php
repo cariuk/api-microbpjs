@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AntrianController extends Controller
@@ -76,6 +77,37 @@ class AntrianController extends Controller
                 "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA),
                 "namapoli" => "",
                 "namadokter" => "",
+            ]
+        ]);
+    }
+
+    function getData(Request $request){
+        $validator = Validator::make(
+            $request->all(), [
+            'tanggalperiksa' => 'required',
+            'kodepoli' => 'required',
+            'polieksekutif' => 'required',
+        ],[]);
+
+        if ($validator->fails()){
+            return response()->json([
+                "metadata" =>[
+                    "status" => 422,
+                    "message" => $validator->messages()->first()
+                ]
+            ],422);
+        }
+
+        return response()->json([
+            "metadata" => [
+                "status" => 200,
+                "message" => "Ok"
+            ],"response" =>[
+                "namapoli" => "",
+                "totalantrian" => 0,
+                "jumlahterlayani" => 0,
+                "lastupdate" => time(),
+                "lastupdatetanggal" => now(),
             ]
         ]);
     }

@@ -18,6 +18,7 @@ Route::group(['namespace' => 'Api'], function() {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'antrian'], function () {
             Route::post('/nomor', 'AntrianController@setData');
+            Route::post('/data', 'AntrianController@getData');
         });
     });
 });
