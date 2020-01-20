@@ -18,8 +18,11 @@ Route::group(['namespace' => 'Api'], function() {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'antrian'], function () {
             Route::post('/nomor', 'AntrianController@setData');
-//            Route::post('/data', 'AntrianController@getData');
             Route::post('/rekap', 'AntrianController@getRekap');
+        });
+
+        Route::group(['prefix' => 'jadwalopearsi'], function () {
+            Route::post('/list', 'JadwalOperasiControllerController@getData');
         });
     });
 });
