@@ -15,7 +15,7 @@ class XTokenToAuthorization
      */
     public function handle($request, Closure $next){
         if ($request->headers->has('x-token')) {
-            $request->headers->set('Authorization', "Bearer "+$request->header('x-token'));
+            $request->headers->set('Authorization', "Bearer ".$request->header('x-token'));
         }
 
         return $next($request);
