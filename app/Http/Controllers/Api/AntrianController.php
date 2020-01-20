@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineModel;
+use App\Model\MappingPoliAntrianModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -34,13 +35,26 @@ class AntrianController extends Controller
             ],422);
         }
 
+        /*CheckMapping*/
+        $mappingPoliantrian = MappingPoliAntrianModel::where([
+            "KODE_POLI" => $request->kodepoli
+        ])->first();
+
+        if (($mappingPoliantrian==null)||(($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
+            return response()->json([
+                "metadata" =>[
+                    "status" => 422,
+                    "message" => " Kode Poli Belum Tersedia Antriannya"
+                ]
+            ],422);
+        }
+
         /*Check Data Antrian*/
         $checkAntrian = AntrianOnlineModel::where([
             "NOMOR_KARTU" => $request->nomorkartu,
             "KODE_POLI" => $request->kodepoli,
             "TANGGAL_PERIKSA" => $request->tanggalperiksa
         ])->first();
-
         if ($checkAntrian==null){
             $new = new AntrianOnlineModel();
                 $new->ID = AntrianOnlineModel::generateNOMOR();
@@ -54,7 +68,7 @@ class AntrianController extends Controller
                 $new->JENIS_REFERENSI = $request->jenisreferensi;
                 $new->JENIS_REQUEST = $request->jenisrequest;
                 $new->POLI_EKSEKUTIF = $request->polieksekutif;
-                $new->NOMOR = rand(1,20);
+                $new->NOMOR = $mappingPoliantrian->KODE_ANTRIAN.rand(1,20);
                 $new->TANGGAL = now();
             $new->save();
 
