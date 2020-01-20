@@ -95,7 +95,7 @@ class AntrianController extends Controller
         ]);
     }
 
-    function getData(Request $request){
+    function getRekap(Request $request){
         $validator = Validator::make(
             $request->all(), [
             'tanggalperiksa' => 'required',
@@ -111,15 +111,28 @@ class AntrianController extends Controller
                 ]
             ],422);
         }
+        /*CheckMapping*/
+        $mappingPoliantrian = MappingPoliAntrianModel::where([
+            "KODE_POLI" => $request->kodepoli
+        ])->first();
+
+        if (($mappingPoliantrian==null)||(($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
+            return response()->json([
+                "metadata" =>[
+                    "status" => 422,
+                    "message" => " Kode Poli Belum Tersedia Antriannya"
+                ]
+            ],422);
+        }
 
         return response()->json([
             "metadata" => [
                 "status" => 200,
                 "message" => "Ok"
             ],"response" =>[
-                "namapoli" => "",
-                "totalantrian" => 0,
-                "jumlahterlayani" => 0,
+                "namapoli" => $mappingPoliantrian->NAMA_POLI,
+                "totalantrian" => rand(1,5),
+                "jumlahterlayani" => rand(1,3),
                 "lastupdate" => time(),
                 "lastupdatetanggal" => now(),
             ]
