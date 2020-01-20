@@ -68,7 +68,7 @@ class AntrianController extends Controller
                 $new->JENIS_REFERENSI = $request->jenisreferensi;
                 $new->JENIS_REQUEST = $request->jenisrequest;
                 $new->POLI_EKSEKUTIF = $request->polieksekutif;
-                $new->NOMOR = $mappingPoliantrian->KODE_ANTRIAN.rand(1,20);
+                $new->NOMOR = $mappingPoliantrian->KODE_ANTRIAN." ".rand(1,20);
                 $new->TANGGAL = now();
             $new->save();
 
