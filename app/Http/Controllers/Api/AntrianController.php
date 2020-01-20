@@ -89,7 +89,7 @@ class AntrianController extends Controller
                 "kodebooking" => $checkAntrian->ID,
                 "jenisantrean" => $checkAntrian->JENIS_REFERENSI,
                 "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA),
-                "namapoli" => "",
+                "namapoli" => $mappingPoliantrian->NAMA_POLI,
                 "namadokter" => "",
             ]
         ]);
