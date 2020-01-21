@@ -127,7 +127,7 @@ class AntrianController extends Controller
         }
         /*CheckMapping*/
         $mappingPoliantrian = MappingPoliAntrianModel::where([
-            "KODE_POLI" => $request->kodepoli
+            "KODE_POLI" => $request->kodepoli,
         ])->first();
 
         if (($mappingPoliantrian==null)||(($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
