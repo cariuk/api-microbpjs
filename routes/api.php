@@ -21,8 +21,9 @@ Route::group(['namespace' => 'Api'], function() {
             Route::post('/rekap', 'AntrianController@getRekap');
         });
 
-        Route::group(['prefix' => 'jadwalopearsi'], function () {
-            Route::post('/list', 'JadwalOperasiControllerController@getData');
+        Route::group(['prefix' => 'jadwaloperasi'], function () {
+            Route::post('/list', 'JadwalOperasiController@getData');
+            Route::post('/list/tanggal', 'JadwalOperasiController@getDataByTanggal');
         });
     });
 });

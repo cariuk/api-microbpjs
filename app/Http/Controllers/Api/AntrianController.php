@@ -134,7 +134,7 @@ class AntrianController extends Controller
             return response()->json([
                 "metadata" =>[
                     "status" => 422,
-                    "message" => " Kode Poli Belum Tersedia Antriannya"
+                    "message" => "Kode Poli Belum Tersedia Antriannya"
                 ]
             ],422);
         }
