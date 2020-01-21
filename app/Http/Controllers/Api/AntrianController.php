@@ -18,13 +18,14 @@ class AntrianController extends Controller
             'nik' => 'required|min:16|max:16',
             'nomorrm' => 'required',
             'notelp' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d',
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:tomorrow|before:'.date("Y-m-d",strtotime("+9 day")),
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
             'jenisreferensi' => 'required|in:1,2',
             'jenisrequest' => 'required|in:1,2',
             'polieksekutif' => 'required|in:0,1'
         ],[]);
+
 
         if ($validator->fails()){
             return response()->json([
@@ -34,6 +35,19 @@ class AntrianController extends Controller
                 ]
             ],422);
         }
+
+        /*Check Tanggal Pengambilan Antrian*/
+        if ($request->tanggal==date("Y-m-d",strtotime("+1 day"))){
+            if (strtotime(date('Y-m-d')." 18:00:00") < strtotime(date("Y-m-d H:i:s"))){
+                return response()->json([
+                    "metadata" =>[
+                        "status" => 422,
+                        "message" => "TESTING"
+                    ]
+                ],422);
+            }
+        }
+
 
         /*CheckMapping*/
         $mappingPoliantrian = MappingPoliAntrianModel::where([
