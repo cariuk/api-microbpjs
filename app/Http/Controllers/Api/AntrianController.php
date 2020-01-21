@@ -14,16 +14,16 @@ class AntrianController extends Controller
     function setData(Request $request){
         $validator = Validator::make(
             $request->all(), [
-            'nomorkartu' => 'required',
-            'nik' => 'required',
+            'nomorkartu' => 'required|min:13|max:13',
+            'nik' => 'required|min:16|max:16',
             'nomorrm' => 'required',
             'notelp' => 'required',
-            'tanggalperiksa' => 'required',
+            'tanggalperiksa' => 'required|date_format:Y-m-d',
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
-            'jenisreferensi' => 'required',
-            'jenisrequest' => 'required',
-            'polieksekutif' => 'required'
+            'jenisreferensi' => 'required|in:1,2',
+            'jenisrequest' => 'required|in:1,2',
+            'polieksekutif' => 'required|in:0,1'
         ],[]);
 
         if ($validator->fails()){
@@ -98,9 +98,9 @@ class AntrianController extends Controller
     function getRekap(Request $request){
         $validator = Validator::make(
             $request->all(), [
-            'tanggalperiksa' => 'required',
+            'tanggalperiksa' => 'required|date_format:Y-m-d',
             'kodepoli' => 'required',
-            'polieksekutif' => 'required',
+            'polieksekutif' => 'required|in:0,1',
         ],[]);
 
         if ($validator->fails()){
