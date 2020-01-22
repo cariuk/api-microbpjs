@@ -145,10 +145,10 @@ class AntrianController extends Controller
                 "message" => "Ok"
             ],"response" =>[
                 "namapoli" => $mappingPoliantrian->NAMA_POLI,
-                "totalantrian" => rand(1,5),
-                "jumlahterlayani" => rand(1,3),
-                "lastupdate" => time(),
-                "lastupdatetanggal" => now(),
+                "totalantrian" => 0, /*Ambil Dari Antrian Sirspro*/
+                "jumlahterlayani" => 0, /*Ambil Dari Antrian Sirspro*/
+                "lastupdate" => round(microtime(true) * 1000),
+                "lastupdatetanggal" => date("Y-m-d"),
             ]
         ]);
     }
