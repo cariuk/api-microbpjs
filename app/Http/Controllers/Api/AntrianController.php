@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineModel;
 use App\Model\MappingPoliAntrianModel;
+use App\Model\MappingPoliModel;
+use App\ModelBridge\Cetakan\AntrianRJModel;
+use App\ModelBridge\Cetakan\AntrianRJSMFModel;
 use App\ModelBridge\Master\JenisLoketModel;
 use App\ModelBridge\Pendaftaran\AntrianLoketModel;
 use Illuminate\Http\Request;
@@ -74,6 +77,11 @@ class AntrianController extends Controller
             ],422);
         }
 
+        /*Get Mapping SMF*/
+        $mappingPoli = MappingPoliModel::where([
+            "KODE" => $mappingPoliantrian->KODE_POLI
+        ])->first();
+
         /*Check Data Antrian*/
         $checkAntrian = AntrianOnlineModel::where([
             "NOMOR_KARTU" => $request->nomorkartu,
@@ -81,21 +89,36 @@ class AntrianController extends Controller
             "TANGGAL_PERIKSA" => $request->tanggalperiksa
         ])->first();
         if ($checkAntrian==null){
-            $new = new AntrianOnlineModel();
-                $new->ID = AntrianOnlineModel::generateNOMOR();
-                $new->NOMOR_KARTU = $request->nomorkartu;
-                $new->NIK = $request->nik;
-                $new->NOMOR_RM = $request->nomorrm;
-                $new->NO_TELP = $request->notelp;
-                $new->TANGGAL_PERIKSA = $request->tanggalperiksa;
-                $new->KODE_POLI = $request->kodepoli;
-                $new->NOMOR_REFERENSI = $request->nomorreferensi;
-                $new->JENIS_REFERENSI = $request->jenisreferensi;
-                $new->JENIS_REQUEST = $request->jenisrequest;
-                $new->POLI_EKSEKUTIF = $request->polieksekutif;
-                $new->NOMOR = $mappingPoliantrian->KODE_ANTRIAN." ".rand(1,20);
-                $new->TANGGAL = now();
+            /*Get Nomor Antrian*/
+            $new = new AntrianRJModel();
+                $new->TANGGAL = $request->tanggalperiksa;
+                $new->TIPE = $mappingPoliantrian->KODE_ANTRIAN;
+                $new->WAKTU = now();
             $new->save();
+
+            $smf = new AntrianRJSMFModel();
+                $smf->TANGGAL = $new->TANGGAL;
+                $smf->TIPE = $new->TIPE;
+                $smf->KARCIS_RJ = $new->ID;
+                $smf->BPJS = 1;
+                $smf->SMF = $mappingPoli->SMF;
+            $smf->save();
+
+            $newAntrianOnline = new AntrianOnlineModel();
+                $newAntrianOnline->ID = AntrianOnlineModel::generateNOMOR();
+                $newAntrianOnline->NOMOR_KARTU = $request->nomorkartu;
+                $newAntrianOnline->NIK = $request->nik;
+                $newAntrianOnline->NOMOR_RM = $request->nomorrm;
+                $newAntrianOnline->NO_TELP = $request->notelp;
+                $newAntrianOnline->TANGGAL_PERIKSA = $request->tanggalperiksa;
+                $newAntrianOnline->KODE_POLI = $request->kodepoli;
+                $newAntrianOnline->NOMOR_REFERENSI = $request->nomorreferensi;
+                $newAntrianOnline->JENIS_REFERENSI = $request->jenisreferensi;
+                $newAntrianOnline->JENIS_REQUEST = $request->jenisrequest;
+                $newAntrianOnline->POLI_EKSEKUTIF = $request->polieksekutif;
+                $newAntrianOnline->NOMOR = $mappingPoliantrian->KODE_ANTRIAN." ".$new->ID;
+                $newAntrianOnline->TANGGAL = now();
+            $newAntrianOnline->save();
 
             /*Check Again*/
             $checkAntrian = AntrianOnlineModel::where([
