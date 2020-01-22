@@ -139,7 +139,16 @@ class AntrianController extends Controller
             "KODE_POLI" => $request->kodepoli,
         ])->first();
 
-        if (($mappingPoliantrian==null)||(($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
+        if ($mappingPoliantrian==null){
+            return response()->json([
+                "metadata" =>[
+                    "status" => 422,
+                    "message" => " Kode Poli Tidak Sesuai"
+                ]
+            ],422);
+        }
+
+        if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
                     "status" => 422,
@@ -157,7 +166,7 @@ class AntrianController extends Controller
                 "totalantrian" => 0, /*Ambil Dari Antrian Sirspro*/
                 "jumlahterlayani" => 0, /*Ambil Dari Antrian Sirspro*/
                 "lastupdate" => round(microtime(true) * 1000),
-                "lastupdatetanggal" => date("Y-m-d"),
+                "lastupdatetanggal" => date("Y-m-d H:m:i"),
             ]
         ]);
     }
