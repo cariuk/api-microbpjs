@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineModel;
 use App\Model\MappingPoliAntrianModel;
+use App\ModelBridge\Master\JenisLoketModel;
+use App\ModelBridge\Pendaftaran\AntrianLoketModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -156,6 +158,19 @@ class AntrianController extends Controller
                 ]
             ],422);
         }
+
+        /*Antrian Yang Terpanggil*/
+        $jenis = JenisLoketModel::where([
+            "HURUF" => $mappingPoliantrian->KODE_ANTRIAN
+        ])->first();
+
+        $terpanggil = AntrianLoketModel::select(
+            "*",
+            DB::raw("LPAD(NOMOR,3,'0') AS NOMOR")
+        )->where([
+            "JENIS" => $jenis->ID,
+            "TANGGAL" => $request->tanggalperiksa
+        ])->orderBy("WAKTU","DESC")->first();
 
         return response()->json([
             "metadata" => [
