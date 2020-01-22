@@ -54,7 +54,16 @@ class AntrianController extends Controller
             "KODE_POLI" => $request->kodepoli
         ])->first();
 
-        if (($mappingPoliantrian==null)||(($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
+        if ($mappingPoliantrian==null){
+            return response()->json([
+                "metadata" =>[
+                    "status" => 422,
+                    "message" => " Kode Poli Tidak Sesuai"
+                ]
+            ],422);
+        }
+
+        if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
                     "status" => 422,
@@ -102,7 +111,7 @@ class AntrianController extends Controller
                 "nomorantrean" => $checkAntrian->NOMOR,
                 "kodebooking" => $checkAntrian->ID,
                 "jenisantrean" => $checkAntrian->JENIS_REFERENSI,
-                "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA),
+                "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA)*1000,
                 "namapoli" => $mappingPoliantrian->NAMA_POLI,
                 "namadokter" => "",
             ]
