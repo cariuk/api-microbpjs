@@ -18,7 +18,7 @@ class AntrianController extends Controller
             'nik' => 'required|min:16|max:16',
             'nomorrm' => 'required',
             'notelp' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:tomorrow|before:'.date("Y-m-d",strtotime("+7 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:tomorrow|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
             'jenisreferensi' => 'required|in:1,2',
