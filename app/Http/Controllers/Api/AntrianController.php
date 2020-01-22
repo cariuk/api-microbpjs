@@ -195,14 +195,19 @@ class AntrianController extends Controller
             "TANGGAL" => $request->tanggalperiksa
         ])->orderBy("WAKTU","DESC")->first();
 
+        $antrian = AntrianRJModel::where([
+            "TANGGAL" => date("Y-m-d",strtotime($request->tanggalperiksa)),
+            "TIPE" => $mappingPoliantrian->KODE_ANTRIAN
+        ])->orderBy("WAKTU","desc")->first();
+
         return response()->json([
             "metadata" => [
                 "status" => 200,
                 "message" => "Ok"
             ],"response" =>[
                 "namapoli" => $mappingPoliantrian->NAMA_POLI,
-                "totalantrian" => 0, /*Ambil Dari Antrian Sirspro*/
-                "jumlahterlayani" => 0, /*Ambil Dari Antrian Sirspro*/
+                "totalantrian" => $antrian==null?0:$antrian->ID, /*Ambil Dari Antrian Sirspro*/
+                "jumlahterlayani" => $terpanggil==null?0:$terpanggil, /*Ambil Dari Antrian Sirspro*/
                 "lastupdate" => round(microtime(true) * 1000),
                 "lastupdatetanggal" => date("Y-m-d H:m:i"),
             ]
