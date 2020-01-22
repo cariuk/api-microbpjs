@@ -13,6 +13,7 @@ use App\ModelBridge\Pendaftaran\AntrianLoketModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class AntrianController extends Controller
 {
@@ -146,7 +147,7 @@ class AntrianController extends Controller
     function getRekap(Request $request){
         $validator = Validator::make(
             $request->all(), [
-            'tanggalperiksa' => 'required|date_format:Y-m-d',
+            'tanggalperiksa' => 'required|date_format:Y-m-d|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
             'polieksekutif' => 'required|in:0,1',
         ],[]);
@@ -181,36 +182,53 @@ class AntrianController extends Controller
                 ]
             ],422);
         }
+        try{
+            /*Antrian Yang Terpanggil*/
+            $jenis = JenisLoketModel::where([
+                "HURUF" => $mappingPoliantrian->KODE_ANTRIAN
+            ])->first();
 
-        /*Antrian Yang Terpanggil*/
-        $jenis = JenisLoketModel::where([
-            "HURUF" => $mappingPoliantrian->KODE_ANTRIAN
-        ])->first();
+            if ($jenis==null){
+                return response()->json([
+                    "metadata" =>[
+                        "status" => 422,
+                        "message" => "Kode Poli Belum Tersedia Antriannya"
+                    ]
+                ],422);
+            }
 
-        $terpanggil = AntrianLoketModel::select(
-            "*",
-            DB::raw("LPAD(NOMOR,3,'0') AS NOMOR")
-        )->where([
-            "JENIS" => $jenis->ID,
-            "TANGGAL" => $request->tanggalperiksa
-        ])->orderBy("WAKTU","DESC")->first();
+            $terpanggil = AntrianLoketModel::select(
+                "*",
+                DB::raw("LPAD(NOMOR,3,'0') AS NOMOR")
+            )->where([
+                "JENIS" => $jenis->ID,
+                "TANGGAL" => $request->tanggalperiksa
+            ])->orderBy("WAKTU","DESC")->first();
 
-        $antrian = AntrianRJModel::where([
-            "TANGGAL" => date("Y-m-d",strtotime($request->tanggalperiksa)),
-            "TIPE" => $mappingPoliantrian->KODE_ANTRIAN
-        ])->orderBy("WAKTU","desc")->first();
+            $antrian = AntrianRJModel::where([
+                "TANGGAL" => date("Y-m-d",strtotime($request->tanggalperiksa)),
+                "TIPE" => $mappingPoliantrian->KODE_ANTRIAN
+            ])->orderBy("WAKTU","desc")->first();
 
-        return response()->json([
-            "metadata" => [
-                "status" => 200,
-                "message" => "Ok"
-            ],"response" =>[
-                "namapoli" => $mappingPoliantrian->NAMA_POLI,
-                "totalantrian" => $antrian==null?0:$antrian->ID, /*Ambil Dari Antrian Sirspro*/
-                "jumlahterlayani" => $terpanggil==null?0:$terpanggil, /*Ambil Dari Antrian Sirspro*/
-                "lastupdate" => round(microtime(true) * 1000),
-                "lastupdatetanggal" => date("Y-m-d H:m:i"),
-            ]
-        ]);
+            return response()->json([
+                "metadata" => [
+                    "status" => 200,
+                    "message" => "Ok"
+                ],"response" =>[
+                    "namapoli" => $mappingPoliantrian->NAMA_POLI,
+                    "totalantrian" => $antrian==null?0:$antrian->ID, /*Ambil Dari Antrian Sirspro*/
+                    "jumlahterlayani" => $terpanggil==null?0:$terpanggil, /*Ambil Dari Antrian Sirspro*/
+                    "lastupdate" => round(microtime(true) * 1000),
+                    "lastupdatetanggal" => date("Y-m-d H:m:i"),
+                ]
+            ]);
+        }catch (Exception $exception){
+            return response()->json([
+                "metadata" => [
+                    "status" => $exception->getCode(),
+                    "message" => $exception->getMessage()
+            ]]);
+        }
+
     }
 }
