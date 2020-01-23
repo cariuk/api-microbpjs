@@ -10,7 +10,7 @@ class JadwalOperasiController extends Controller{
     function getData(Request $request){
         $validator = Validator::make(
             $request->all(), [
-            'nomorpeserta' => 'required|min:13|max:13',
+            'nopeserta' => 'required|min:13|max:13',
         ],[]);
 
         if ($validator->fails()){
