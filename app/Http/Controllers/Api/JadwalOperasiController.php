@@ -22,6 +22,23 @@ class JadwalOperasiController extends Controller{
             ],422);
         }
 
+        $jadwalOperasi = JadwalOperasiController::select(
+            "jadwal_operasi.*"
+        )->join("pendaftaran.penjamin pp",function ($join){
+            $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
+                "pp.JENIS",2
+            );
+        })->where("jadwal_operasi.STATUS",1)->first();
+
+        if ($jadwalOperasi==null){
+            return response()->json([
+                "metadata" => [
+                    "status" => 404,
+                    "message" => "Tidak Ada Jadwal Operasi"
+                ]
+            ],404);
+        }
+
         return response()->json([
             "metadata" => [
                 "status" => 200,
