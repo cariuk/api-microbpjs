@@ -16,7 +16,7 @@ class JadwalOperasiController extends Controller{
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => $validator->messages()->first()
                 ]
             ],422);
@@ -28,12 +28,12 @@ class JadwalOperasiController extends Controller{
             $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
                 "pp.JENIS",2
             );
-        })->where("jadwal_operasi.STATUS",1)->first();
+        })->where("jadwal_operasi.code",1)->first();
 
         if ($jadwalOperasi==null){
             return response()->json([
                 "metadata" => [
-                    "status" => 404,
+                    "code" => 404,
                     "message" => "Tidak Ada Jadwal Operasi"
                 ]
             ],404);
@@ -41,7 +41,7 @@ class JadwalOperasiController extends Controller{
 
         return response()->json([
             "metadata" => [
-                "status" => 200,
+                "code" => 200,
                 "message" => "Ok"
             ],"response" =>[
                 "list" => []
@@ -60,7 +60,7 @@ class JadwalOperasiController extends Controller{
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => $validator->messages()->first()
                 ]
             ],422);
@@ -68,7 +68,7 @@ class JadwalOperasiController extends Controller{
 
         return response()->json([
             "metadata" => [
-                "status" => 200,
+                "code" => 200,
                 "message" => "Ok"
             ],"response" =>[
                 "list" => []

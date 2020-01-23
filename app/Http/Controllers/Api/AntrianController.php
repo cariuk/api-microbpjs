@@ -36,7 +36,7 @@ class AntrianController extends Controller
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => $validator->messages()->first()
                 ]
             ],422);
@@ -47,7 +47,7 @@ class AntrianController extends Controller
             if (strtotime(date('Y-m-d')." 18:00:00") < strtotime(date("Y-m-d H:i:s"))){
                 return response()->json([
                     "metadata" =>[
-                        "status" => 422,
+                        "code" => 422,
                         "message" => "TESTING"
                     ]
                 ],422);
@@ -63,7 +63,7 @@ class AntrianController extends Controller
         if ($mappingPoliantrian==null){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => " Kode Poli Tidak Sesuai"
                 ]
             ],422);
@@ -72,7 +72,7 @@ class AntrianController extends Controller
         if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => " Kode Poli Belum Tersedia Antriannya"
                 ]
             ],422);
@@ -131,7 +131,7 @@ class AntrianController extends Controller
 
         return response()->json([
             "metadata" => [
-                "status" => 200,
+                "code" => 200,
                 "message" => "Ok"
             ],"response" =>[
                 "nomorantrean" => $checkAntrian->NOMOR,
@@ -155,7 +155,7 @@ class AntrianController extends Controller
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => $validator->messages()->first()
                 ]
             ],422);
@@ -168,7 +168,7 @@ class AntrianController extends Controller
         if ($mappingPoliantrian==null){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => " Kode Poli Tidak Sesuai"
                 ]
             ],422);
@@ -177,7 +177,7 @@ class AntrianController extends Controller
         if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
-                    "status" => 422,
+                    "code" => 422,
                     "message" => "Kode Poli Belum Tersedia Antriannya"
                 ]
             ],422);
@@ -191,7 +191,7 @@ class AntrianController extends Controller
             if ($jenis==null){
                 return response()->json([
                     "metadata" =>[
-                        "status" => 422,
+                        "code" => 422,
                         "message" => "Kode Poli Belum Tersedia Antriannya"
                     ]
                 ],422);
@@ -212,7 +212,7 @@ class AntrianController extends Controller
 
             return response()->json([
                 "metadata" => [
-                    "status" => 200,
+                    "code" => 200,
                     "message" => "Ok"
                 ],"response" =>[
                     "namapoli" => $mappingPoliantrian->NAMA_POLI,
@@ -225,7 +225,7 @@ class AntrianController extends Controller
         }catch (Exception $exception){
             return response()->json([
                 "metadata" => [
-                    "status" => $exception->getCode(),
+                    "code" => $exception->getCode(),
                     "message" => $exception->getMessage()
             ]]);
         }

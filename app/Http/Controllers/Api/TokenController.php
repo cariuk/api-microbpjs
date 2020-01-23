@@ -21,7 +21,7 @@ class TokenController extends Controller{
         if ($this->hasTooManyLoginAttempts($request)){
             return response()->json([
                 "metadata" => [
-                    "status" => 429,
+                    "code" => 429,
                     "message" => "Maaf! Terlalu Banyak Percobaan Login, Silahkan Coba Lagi Setelah 60 Menit"
                 ]
             ], 429);
@@ -32,7 +32,7 @@ class TokenController extends Controller{
             $this->incrementLoginAttempts($request);
             return response()->json([
                 "metadata" => [
-                    "status" => 401,
+                    "code" => 401,
                     "message" => "Whoops! Terjadi Kesalahaan Login, Periksa Kembali Username Dan Password Anda"
                 ],
             ], 401);
@@ -48,7 +48,7 @@ class TokenController extends Controller{
 
         return response()->json([
             "metadata" => [
-                "status" => 200,
+                "code" => 200,
                 "message" => "Ok"
             ],"response" =>[
                 "token" => $tokenResult->accessToken,
