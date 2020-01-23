@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\ModelBridge\Pendaftaran\JadwalOperasiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,7 +66,9 @@ class JadwalOperasiController extends Controller{
                 ]
             ],422);
         }
+        JadwalOperasiModel::where([
 
+        ])->orderBy("")->get();
         return response()->json([
             "metadata" => [
                 "code" => 200,
