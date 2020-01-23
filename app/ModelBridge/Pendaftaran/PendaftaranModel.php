@@ -4,7 +4,6 @@ namespace App\ModelBridge\Pendaftaran;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PendaftaranModel extends IndexModel
-{
+class PendaftaranModel extends IndexModel{
     //
 }
