@@ -95,7 +95,8 @@ class JadwalOperasiController extends Controller{
             $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
                 "pp.JENIS",2
             );
-        })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")->get();
+        })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
+        ->whereBetween("jadwal_operasi.TANGGAL",[$request->tanggalawal,$request->tanggalakhir])->get();
 
         return response()->json([
             "metadata" => [
