@@ -68,7 +68,7 @@ class JadwalOperasiController extends Controller{
         $validator = Validator::make(
             $request->all(), [
             'tanggalawal' => 'required|date_format:Y-m-d',
-            'tanggalakhir' => 'required|date_format:Y-m-d|after:'.date("Y-m-d",strtotime($request->tanggalawal)-1).'|before:'.date("Y-m-d",strtotime("+9 day")),
+            'tanggalakhir' => 'required|date_format:Y-m-d|after:'.date("Y-m-d",strtotime($request->tanggalawal)-1),
 
         ],[]);
 

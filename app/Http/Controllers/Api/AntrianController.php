@@ -24,12 +24,11 @@ class AntrianController extends Controller
             'nik' => 'required|min:16|max:16',
             'nomorrm' => 'required',
             'notelp' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:tomorrow|before:'.date("Y-m-d",strtotime("+8 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
             'jenisreferensi' => 'required|in:1,2',
-            'jenisrequest' => 'required|in:1,2',
-            'polieksekutif' => 'required|in:0,1'
+            'jenisrequest' => 'required|in:1,2'
         ],[]);
 
 
@@ -116,7 +115,7 @@ class AntrianController extends Controller
                 $newAntrianOnline->NOMOR_REFERENSI = $request->nomorreferensi;
                 $newAntrianOnline->JENIS_REFERENSI = $request->jenisreferensi;
                 $newAntrianOnline->JENIS_REQUEST = $request->jenisrequest;
-                $newAntrianOnline->POLI_EKSEKUTIF = $request->polieksekutif;
+                $newAntrianOnline->POLI_EKSEKUTIF = $request->polieksekutif==null?0:$request->polieksekutif;
                 $newAntrianOnline->NOMOR = $mappingPoliantrian->KODE_ANTRIAN." ".$new->ID;
                 $newAntrianOnline->TANGGAL = now();
             $newAntrianOnline->save();
