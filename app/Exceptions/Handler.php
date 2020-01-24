@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,23 +47,31 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
+    public function render($request, Exception $exception){
         if ($request->expectsJson()) {
             if ($exception instanceof ThrottleRequestsException) {
                 return response()->json([
                     "diagnostic" => [
                         'code' => 429,
-                        'message' => "Too many requests"
+                        'message' => $exception->getMessage()
                     ],
                 ], 429);
             }
         }
+
+        if ($exception instanceof  MethodNotAllowedHttpException){
+            return response()->json([
+                "diagnostic" => [
+                    'code' => 405,
+                    'message' => $exception->getMessage()
+                ],
+            ],405 );
+        }
+
         return parent::render($request, $exception);
     }
 
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
+    protected function unauthenticated($request, AuthenticationException $exception){
         return $request->expectsJson() ? response()->json([
             "metadata" => [
                 'code' => 401,
