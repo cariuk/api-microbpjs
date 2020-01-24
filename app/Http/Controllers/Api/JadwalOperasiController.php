@@ -26,13 +26,21 @@ class JadwalOperasiController extends Controller{
         }
 
         $jadwalOperasi = JadwalOperasiModel::select(
-            "jadwal_operasi.*"
-        )->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
+            "jadwal_operasi.BOOKING as kodebooking",
+            "jadwal_operasi.TANGGAL as tanggaloperasi",
+            "jadwal_operasi.TINDAKAN as jenistindakan",
+            "bpm.KODE as kodepoli",
+            "bpm.DESKRIPSI as namapoli",
+            DB::raw("IF(jadwal_operasi.STATUS=2,1,0) as terlaksana")
+        )
+        ->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
         ->join("pendaftaran.penjamin as pp",function ($join){
             $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
                 "pp.JENIS",2
             );
-        })->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
+        })
+        ->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
+        ->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
         ->where([
             "jadwal_operasi.status" => 1
         ])->get();
@@ -46,23 +54,12 @@ class JadwalOperasiController extends Controller{
             ],404);
         }
 
-        $mappingPoli = MappingPoliModel::where([
-            "SMF" => $jadwalOperasi->SMF
-        ])->first();
-
         return response()->json([
             "metadata" => [
                 "code" => 200,
                 "message" => "Ok"
             ],"response" =>[
-                "list" => [
-                    "kodebooking" => $jadwalOperasi->BOOKING,
-                    "tanggaloperasi" => $jadwalOperasi->TANGGAL,
-                    "jenistindakan" => $jadwalOperasi->TINDAKAN,
-                    "kodepoli" => $mappingPoli->KODE,
-                    "namapoli" => $mappingPoli->DESKRIPSI,
-                    "terlaksana" => $jadwalOperasi->STATUS==1?0:1
-                ]
+                "list" => $jadwalOperasi
             ]
         ]);
     }
@@ -88,8 +85,8 @@ class JadwalOperasiController extends Controller{
             "jadwal_operasi.BOOKING as kodebooking",
             "jadwal_operasi.TANGGAL as tanggaloperasi",
             "jadwal_operasi.TINDAKAN as jenistindakan",
-            "jadwal_operasi.SMF as kodepoli",
-            "jadwal_operasi.SMF as namapoli",
+            "bpm.KODE as kodepoli",
+            "bpm.DESKRIPSI as namapoli",
             DB::raw("IF(jadwal_operasi.STATUS=2,1,0) as terlaksana"),
             DB::raw("IF(pp.JENIS=2,master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS),'') as nopeserta"),
             DB::raw("ROUND((UNIX_TIMESTAMP(CURTIME(3))* 1000),0) as lastupdate")
@@ -98,7 +95,7 @@ class JadwalOperasiController extends Controller{
             $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
                 "pp.JENIS",2
             );
-        })->get();
+        })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")->get();
 
         return response()->json([
             "metadata" => [
