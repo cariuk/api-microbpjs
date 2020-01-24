@@ -35,7 +35,7 @@ class JadwalOperasiController extends Controller{
         })->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
         ->where([
             "jadwal_operasi.status" => 1
-        ])->first();
+        ])->get();
 
         if ($jadwalOperasi==null){
             return response()->json([
