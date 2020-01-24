@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -66,6 +67,15 @@ class Handler extends ExceptionHandler
                     'message' => $exception->getMessage()
                 ],
             ],405 );
+        }
+
+        if ($exception instanceof  NotFoundHttpException){
+            return response()->json([
+                "diagnostic" => [
+                    'code' => 404,
+                    'message' => "Not Found"
+                ],
+            ],404 );
         }
 
         return parent::render($request, $exception);
