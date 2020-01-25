@@ -43,7 +43,7 @@ class JadwalOperasiController extends Controller{
         ->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
         ->where([
             "jadwal_operasi.status" => 1
-        ])->get();
+        ])->orderBy("jadwal_operasi.TANGGAL")->get();
 
         if ($jadwalOperasi==null){
             return response()->json([
@@ -96,7 +96,8 @@ class JadwalOperasiController extends Controller{
                 "pp.JENIS",2
             );
         })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
-        ->whereBetween("jadwal_operasi.TANGGAL",[$request->tanggalawal,$request->tanggalakhir])->get();
+        ->whereBetween("jadwal_operasi.TANGGAL",[$request->tanggalawal,$request->tanggalakhir])
+        ->orderBy("jadwal_operasi.TANGGAL")->get();
 
         return response()->json([
             "metadata" => [
