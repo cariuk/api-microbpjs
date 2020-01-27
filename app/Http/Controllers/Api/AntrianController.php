@@ -22,7 +22,6 @@ class AntrianController extends Controller
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
             'nik' => 'required|min:16|max:16',
-            'nomorrm' => 'required',
             'notelp' => 'required',
             'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
@@ -108,7 +107,7 @@ class AntrianController extends Controller
                 $newAntrianOnline->ID = AntrianOnlineModel::generateNOMOR();
                 $newAntrianOnline->NOMOR_KARTU = $request->nomorkartu;
                 $newAntrianOnline->NIK = $request->nik;
-                $newAntrianOnline->NOMOR_RM = $request->nomorrm;
+                $newAntrianOnline->NOMOR_RM =  $request->nomorrm==null?0:$request->nomorrm;
                 $newAntrianOnline->NO_TELP = $request->notelp;
                 $newAntrianOnline->TANGGAL_PERIKSA = $request->tanggalperiksa;
                 $newAntrianOnline->KODE_POLI = $request->kodepoli;
