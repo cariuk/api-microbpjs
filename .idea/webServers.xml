@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="0dc49b2b-f957-462f-955b-0c66df587e32" name="Prod" url="http://36.37.114.42">
+        <fileTransfer host="36.37.114.42" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
