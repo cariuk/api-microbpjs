@@ -52,23 +52,23 @@ class AntrianController extends Controller
             }
         }
 
-        /*Check Jenis Request*/
-        if ($request->jenisrequest==2){
-            $validator = Validator::make(
-                $request->all(), [
-                'nomorrm' => 'required',
-            ],[]);
-
-
-            if ($validator->fails()){
-                return response()->json([
-                    "metadata" =>[
-                        "code" => 422,
-                        "message" => $validator->messages()->first()
-                    ]
-                ],422);
-            }
-        }
+//        /*Check Jenis Request*/
+//        if ($request->jenisrequest==2){
+//            $validator = Validator::make(
+//                $request->all(), [
+//                'nomorrm' => 'required',
+//            ],[]);
+//
+//
+//            if ($validator->fails()){
+//                return response()->json([
+//                    "metadata" =>[
+//                        "code" => 422,
+//                        "message" => $validator->messages()->first()
+//                    ]
+//                ],422);
+//            }
+//        }
 
         /*CheckMapping*/
         $mappingPoliantrian = MappingPoliAntrianModel::where([
