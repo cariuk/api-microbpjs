@@ -181,8 +181,11 @@ class AntrianController extends Controller
             $request->all(), [
             'tanggalperiksa' => 'required|date_format:Y-m-d|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
-            'polieksekutif' => 'required|in:0,1',
-        ],[]);
+        ],[
+            "tanggalperiksa.required" => 'Tanggal Periksa Harus Terisi',
+            "tanggalperiksa.date_format" => 'Tanggal Periksa Harus Sesuai Dengan Format Y-m-d',
+            "kodepoli.required" => 'Kode Poli Harus Terisi',
+        ]);
 
         if ($validator->fails()){
             return response()->json([
