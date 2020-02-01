@@ -233,8 +233,7 @@ class AntrianController extends Controller
             }
 
             $terpanggil = AntrianLoketModel::select(
-                "*",
-                DB::raw("LPAD(NOMOR,3,'0') AS NOMOR")
+                "*"
             )->where([
                 "JENIS" => $jenis->ID,
                 "TANGGAL" => $request->tanggalperiksa
