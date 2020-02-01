@@ -28,7 +28,9 @@ class AntrianController extends Controller
             'nomorreferensi' => 'required',
             'jenisreferensi' => 'required|in:1,2',
             'jenisrequest' => 'required|in:1,2'
-        ],[]);
+        ],[
+
+        ]);
 
 
         if ($validator->fails()){
@@ -231,8 +233,8 @@ class AntrianController extends Controller
                     "message" => "Ok"
                 ],"response" =>[
                     "namapoli" => $mappingPoliantrian->NAMA_POLI,
-                    "totalantrian" => $antrian==null?0:$antrian->ID, /*Ambil Dari Antrian Sirspro*/
-                    "jumlahterlayani" => $terpanggil==null?0:$terpanggil, /*Ambil Dari Antrian Sirspro*/
+                    "totalantrean" => $antrian==null?0:$antrian->ID, /*Ambil Dari Antrian Sirspro*/
+                    "jumlahterlayani" => $terpanggil==null?0:$terpanggil->NOMOR, /*Ambil Dari Antrian Sirspro*/
                     "lastupdate" => round(microtime(true) * 1000),
                     "lastupdatetanggal" => date("Y-m-d H:m:i"),
                 ]
