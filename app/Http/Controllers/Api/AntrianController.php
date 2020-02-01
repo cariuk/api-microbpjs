@@ -29,7 +29,22 @@ class AntrianController extends Controller
             'jenisreferensi' => 'required|in:1,2',
             'jenisrequest' => 'required|in:1,2'
         ],[
-
+            "nomorkartu.required" => "Nomor Kartu Peserta Harus Terisi",
+            "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
+            "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
+            "nik.required" => "Nomor Induk Kependudukan Harus Terisi",
+            "nik.min" => "Nomor Induk Kependudukan Maximal 13 Digit",
+            "nik.max" => "Nomor Induk Kependudukan Maximal 13 Digit",
+            "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
+            "tanggalperiksa.date_format" => "Format Tanggal Periksa Harus Sesuai Format",
+            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +7",
+            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +7",
+            "kodepoli.before" => "Kode Poli Harus Terisi",
+            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Harus Terisi",
+            "jenisreferensi.required" => "Jenis Referensi Harus Terisi",
+            "jenisreferensi.in" => "Jenis Referensi Hanya Boleh 1 = Nomor Rujukan | 2 = Nomor Kontrol ",
+            "jenisrequest.required" => "Jenis Request Harus Terisi",
+            "jenisrequest.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
         ]);
 
 
