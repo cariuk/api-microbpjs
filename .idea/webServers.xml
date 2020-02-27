@@ -18,6 +18,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="113806ef-5b57-4768-b70b-ad3ee19713f0" name="RSIA Amanat" url="http://192.168.10.49">
+        <fileTransfer host="192.168.10.49" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

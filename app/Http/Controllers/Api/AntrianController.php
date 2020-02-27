@@ -33,8 +33,8 @@ class AntrianController extends Controller
             "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
             "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
             "nik.required" => "Nomor Induk Kependudukan Harus Terisi",
-            "nik.min" => "Nomor Induk Kependudukan Maximal 13 Digit",
-            "nik.max" => "Nomor Induk Kependudukan Maximal 13 Digit",
+            "nik.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
+            "nik.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
             "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
             "tanggalperiksa.date_format" => "Format Tanggal Periksa Harus Sesuai Format",
             "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +7 Dari Tanggal ".date("Y-m-d"),
@@ -69,24 +69,6 @@ class AntrianController extends Controller
             }
         }
 
-//        /*Check Jenis Request*/
-//        if ($request->jenisrequest==2){
-//            $validator = Validator::make(
-//                $request->all(), [
-//                'nomorrm' => 'required',
-//            ],[]);
-//
-//
-//            if ($validator->fails()){
-//                return response()->json([
-//                    "metadata" =>[
-//                        "code" => 422,
-//                        "message" => $validator->messages()->first()
-//                    ]
-//                ],422);
-//            }
-//        }
-
         /*CheckMapping*/
         $mappingPoliantrian = MappingPoliAntrianModel::where([
             "KODE_POLI" => $request->kodepoli
@@ -119,8 +101,10 @@ class AntrianController extends Controller
         $checkAntrian = AntrianOnlineModel::where([
             "NOMOR_KARTU" => $request->nomorkartu,
             "KODE_POLI" => $request->kodepoli,
+            "NOMOR_REFERENSI" => $request->nomorreferensi,
             "TANGGAL_PERIKSA" => $request->tanggalperiksa
         ])->first();
+
         if ($checkAntrian==null){
             /*Get Nomor Antrian*/
             $new = new AntrianRJModel();
@@ -159,12 +143,16 @@ class AntrianController extends Controller
                 "KODE_POLI" => $request->kodepoli,
                 "TANGGAL_PERIKSA" => $request->tanggalperiksa
             ])->first();
+
+            $message = "Berhasil Mengambil Nomor Antrian";
+        }else{
+            $message = "Nomor Referensi / Nomor Rujukan Ini Telah Memiliki Nomor Antrian";
         }
 
         return response()->json([
             "metadata" => [
                 "code" => 200,
-                "message" => "Ok"
+                "message" => $message
             ],"response" =>[
                 "nomorantrean" => $checkAntrian->NOMOR,
                 "kodebooking" => $checkAntrian->ID,
