@@ -162,7 +162,7 @@ class AntrianController extends Controller
                 "metadata" =>[
                     "code" => 422,
                     "message" => "Maaf Nomor Rujukan / Nomor Referensi Ini Telah Terbit Nomor Antriannya Di Tanggal "
-                        .$checkAntrian->TANGGAL_PERIKSA." Nomor Urut :".$checkAntrian->NOMOR
+                        .$checkAntrian->TANGGAL_PERIKSA." Nomor Urut : ".$checkAntrian->NOMOR
                 ]
             ],422);
         }
