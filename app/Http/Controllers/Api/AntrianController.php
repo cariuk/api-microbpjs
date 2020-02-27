@@ -144,24 +144,30 @@ class AntrianController extends Controller
                 "TANGGAL_PERIKSA" => $request->tanggalperiksa
             ])->first();
 
-            $message = "Berhasil Mengambil Nomor Antrian";
+            return response()->json([
+                "metadata" => [
+                    "code" => 200,
+                    "message" => "Berhasil Mengambil Nomor Antrian"
+                ],"response" =>[
+                    "nomorantrean" => $checkAntrian->NOMOR,
+                    "kodebooking" => $checkAntrian->ID,
+                    "jenisantrean" => $checkAntrian->JENIS_REFERENSI,
+                    "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA)*1000,
+                    "namapoli" => $mappingPoliantrian->NAMA_POLI,
+                    "namadokter" => "",
+                ]
+            ]);
         }else{
-            $message = "Nomor Referensi / Nomor Rujukan Ini Telah Memiliki Nomor Antrian";
+            return response()->json([
+                "metadata" =>[
+                    "code" => 422,
+                    "message" => "Maaf Nomor Rujukan / Nomor Referensi Ini Telah Terbit Nomor Antriannya Di Tanggal "
+                        .$checkAntrian->TANGGAL_PERIKSA." Nomor Urut :".$checkAntrian->NOMOR
+                ]
+            ],422);
         }
 
-        return response()->json([
-            "metadata" => [
-                "code" => 200,
-                "message" => $message
-            ],"response" =>[
-                "nomorantrean" => $checkAntrian->NOMOR,
-                "kodebooking" => $checkAntrian->ID,
-                "jenisantrean" => $checkAntrian->JENIS_REFERENSI,
-                "estimasidilayani" => strtotime($checkAntrian->TANGGAL_PERIKSA)*1000,
-                "namapoli" => $mappingPoliantrian->NAMA_POLI,
-                "namadokter" => "",
-            ]
-        ]);
+
     }
 
     function getRekap(Request $request){
