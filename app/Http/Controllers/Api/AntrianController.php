@@ -10,6 +10,7 @@ use App\ModelBridge\Cetakan\AntrianRJModel;
 use App\ModelBridge\Cetakan\AntrianRJSMFModel;
 use App\ModelBridge\Master\JenisLoketModel;
 use App\ModelBridge\Pendaftaran\AntrianLoketModel;
+use Grei\TanggalMerah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -47,12 +48,24 @@ class AntrianController extends Controller
             "jenisrequest.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
         ]);
 
-
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
                     "code" => 422,
                     "message" => $validator->messages()->first()
+                ]
+            ],422);
+        }
+
+        /*Check Tanggal Merah*/
+        $tanggal = new TanggalMerah();
+        $tanggal->set_date(str_replace("-","",$request->tanggalperiksa));
+
+        if (($tanggal->is_holiday())||($tanggal->is_sunday())){
+            return response()->json([
+                "metadata" =>[
+                    "code" => 422,
+                    "message" => "Maaf Tanggal Tersebut Masuk Dalam Tanggal Merah Atau Hari Libur"
                 ]
             ],422);
         }
@@ -63,7 +76,7 @@ class AntrianController extends Controller
                 return response()->json([
                     "metadata" =>[
                         "code" => 422,
-                        "message" => "TESTING"
+                        "message" => "Maaf Pengambilan Nomor Antrian h+1"
                     ]
                 ],422);
             }
