@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "513b481747554b76de8488c85902ae5a",
+    "content-hash": "72be227bdfeab1e8fccedff1158e9fe9",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -441,6 +441,46 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2017-06-27T22:17:23+00:00"
+        },
+        {
+            "name": "grei/tanggalmerah",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guangrei/phptanggalmerah.git",
+                "reference": "55437fb471f84d6bb24af6b6e7db6a73afbe6ecf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guangrei/phptanggalmerah/zipball/55437fb471f84d6bb24af6b6e7db6a73afbe6ecf",
+                "reference": "55437fb471f84d6bb24af6b6e7db6a73afbe6ecf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1@dev|~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Grei\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "guangrei",
+                    "email": "grei@tuta.io"
+                }
+            ],
+            "description": "indonesia holiday checker (include sunday)",
+            "homepage": "https://ipynb.wordpress.com",
+            "time": "2019-01-22T12:33:34+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
