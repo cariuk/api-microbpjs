@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TokenController extends Controller{
-    use  AuthenticatesUsers,ThrottlesLogins;
+    use  AuthenticatesUsers;
 
     function getLogin(Request $request){
         $request->validate([

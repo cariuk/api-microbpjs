@@ -23,6 +23,27 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="RSKDIA ST FATIMAH">
+        <serverdata>
+          <mappings>
+            <mapping deploy="public_html" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="RSU Cahaya Medika">
+        <serverdata>
+          <mappings>
+            <mapping deploy="public_html" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="RSU Marina Permata">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
   </component>
 </project>

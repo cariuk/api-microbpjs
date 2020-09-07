@@ -26,6 +26,30 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="94b40b2d-78a5-45e2-a355-98548a58bc3c" name="RSU Cahaya Medika" url="http://139.99.118.21/">
+        <fileTransfer host="139.99.118.21" port="2244" rootFolder="/home/microbpjs" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="2244" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="a2df3279-90a6-4531-a4e7-2e38b2620192" name="RSKDIA ST FATIMAH" url="http://10.10.70.9">
+        <fileTransfer host="10.10.70.9" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="ba43d5d2-e814-4e19-ba19-290dd0f16807" name="RSU Marina Permata" url="http://192.168.2.216">
+        <fileTransfer host="192.168.2.216" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
