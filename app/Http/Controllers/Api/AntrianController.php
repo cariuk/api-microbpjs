@@ -23,7 +23,6 @@ class AntrianController extends Controller
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
             'nik' => 'required|min:16|max:16',
-            'notelp' => 'required',
             'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:'.date("Y-m-d",strtotime("+90 day")),
             'kodepoli' => 'required',
             'nomorreferensi' => 'required',
