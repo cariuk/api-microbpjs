@@ -51,10 +51,10 @@ class AntrianController extends Controller
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => $validator->messages()->first()
                 ]
-            ],422);
+            ],400);
         }
 
         /*Check Tanggal Merah*/
@@ -64,10 +64,10 @@ class AntrianController extends Controller
         if (($tanggal->is_holiday())||($tanggal->is_sunday())){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => "Maaf Tanggal Tersebut Masuk Dalam Tanggal Merah Atau Hari Libur"
                 ]
-            ],422);
+            ],400);
         }
 
         /*Check Tanggal Pengambilan Antrian*/
@@ -75,10 +75,10 @@ class AntrianController extends Controller
             if (strtotime(date('Y-m-d')." 18:00:00") < strtotime(date("Y-m-d H:i:s"))){
                 return response()->json([
                     "metadata" =>[
-                        "code" => 422,
+                        "code" => 400,
                         "message" => "Maaf Pengambilan Nomor Antrian h+1"
                     ]
-                ],422);
+                ],400);
             }
         }
 
@@ -90,19 +90,19 @@ class AntrianController extends Controller
         if ($mappingPoliantrian==null){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => " Kode Poli Tidak Sesuai"
                 ]
-            ],422);
+            ],400);
         }
 
         if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => " Kode Poli Belum Tersedia Antriannya"
                 ]
-            ],422);
+            ],400);
         }
 
         /*Get Mapping SMF*/
@@ -173,11 +173,11 @@ class AntrianController extends Controller
         }else{
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => "Maaf Nomor Rujukan / Nomor Referensi Ini Telah Terbit Nomor Antriannya Di Tanggal "
                         .$checkAntrian->TANGGAL_PERIKSA." Nomor Urut : ".$checkAntrian->NOMOR
                 ]
-            ],422);
+            ],400);
         }
 
 
@@ -197,10 +197,10 @@ class AntrianController extends Controller
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => $validator->messages()->first()
                 ]
-            ],422);
+            ],400);
         }
         /*CheckMapping*/
         $mappingPoliantrian = MappingPoliAntrianModel::where([
@@ -210,19 +210,19 @@ class AntrianController extends Controller
         if ($mappingPoliantrian==null){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => " Kode Poli Tidak Sesuai"
                 ]
-            ],422);
+            ],400);
         }
 
         if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => "Kode Poli Belum Tersedia Antriannya"
                 ]
-            ],422);
+            ],400);
         }
         try{
             /*Antrian Yang Terpanggil*/
@@ -233,10 +233,10 @@ class AntrianController extends Controller
             if ($jenis==null){
                 return response()->json([
                     "metadata" =>[
-                        "code" => 422,
+                        "code" => 400,
                         "message" => "Kode Poli Belum Tersedia Antriannya"
                     ]
-                ],422);
+                ],400);
             }
 
             $terpanggil = AntrianLoketModel::select(

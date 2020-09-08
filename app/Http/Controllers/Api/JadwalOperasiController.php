@@ -19,10 +19,10 @@ class JadwalOperasiController extends Controller{
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => $validator->messages()->first()
                 ]
-            ],422);
+            ],400);
         }
 
         $jadwalOperasi = JadwalOperasiModel::select(
@@ -75,10 +75,10 @@ class JadwalOperasiController extends Controller{
         if ($validator->fails()){
             return response()->json([
                 "metadata" =>[
-                    "code" => 422,
+                    "code" => 400,
                     "message" => $validator->messages()->first()
                 ]
-            ],422);
+            ],400);
         }
 
         $jadwalOperasi = JadwalOperasiModel::select(
