@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class AntrianOnlineV2Model extends Model{
-    protected $table = "antrian_online";
+    protected $table = "antrian_online_v2";
     protected $primaryKey = "ID";
     public $incrementing = false;
     public $timestamps = false;

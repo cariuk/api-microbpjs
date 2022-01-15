@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Api\Antrian;
 
 use App\Http\Controllers\Controller;
-use App\Model\AntrianOnlineModel;
 use App\Model\AntrianOnlineV2Model;
 use App\Model\MappingDPJPModel;
 use App\Model\MappingPoliAntrianModel;
 use App\Model\MappingPoliModel;
-use App\ModelBridge\Cetakan\AntrianRJModel;
-use App\ModelBridge\Cetakan\AntrianRJSMFModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
+use App\ModelBridge\Pendaftaran\AntrianRuanganModel;
+use App\ModelBridge\Pendaftaran\PendaftaranModel;
+use App\ModelBridge\Pendaftaran\PendaftaranViaModel;
+use App\ModelBridge\Pendaftaran\PenjaminModel;
+use App\ModelBridge\Pendaftaran\TujuanModel;
 use App\ModelBridge\Poliklinik\JadwalPraktekModel;
 use Grei\TanggalMerah;
 use Illuminate\Http\Request;
@@ -196,6 +198,12 @@ class PengambilanNomorController extends Controller
             "DOKTER" => $mappingDokter->DOKTER,
             "STATUS" => 1
         ])->first();
+
+        $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
+            ->where("dokter", $checkJadwalPraktek->DOKTER)
+            ->where("ruangan", $checkJadwalPraktek->RUANGAN)
+            ->where("shift", $checkJadwalPraktek->SHIFT)
+            ->count();
         /*=======================================================================================*/
 
         /*Check Data Antrian*/
@@ -229,11 +237,59 @@ class PengambilanNomorController extends Controller
             $new->JAM_PRAKTEK = $request->jampraktek;
             $new->JENIS_KUNJUNGAN = $request->jeniskunjungan;
             $new->NOMOR_REFERENSI = $request->nomorreferensi;
-            $new->CEKIN = 0;
             $new->STATUS = 1;
             $new->TANGGAL_BUAT = now();
+
             /*Get Nomor Antrian SIMRS*/
-            $new->NOMOR_ANTRIAN = ""; /*Antrian Poli*/
+            try{
+                //Pendaftaran Pasien
+                $pendaftaran = new PendaftaranModel();
+                $pendaftaran->NOMOR = PendaftaranModel::generateNOMOR(date("Y-m-d", strtotime($request->tanggalperiksa)));
+                $pendaftaran->NORM = $checkPasien->NORM;
+                $pendaftaran->TANGGAL = date("Y-m-d H:i:s", strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI));
+                $pendaftaran->DIAGNOSA_MASUK = "Z00.0";
+                $pendaftaran->OLEH = 1;
+                $pendaftaran->STATUS = 1;
+                $pendaftaran->save();
+
+                //Pendaftaran Via
+                $viapendaftaran = new PendaftaranViaModel();
+                $viapendaftaran->NOPEN = $pendaftaran->NOMOR;
+                $viapendaftaran->JENIS = 4;
+                $viapendaftaran->save();
+
+                //Tujuan Pendaftaran
+                $tujuan = new TujuanModel();
+                $tujuan->NOPEN = $pendaftaran->NOMOR;
+                $tujuan->RUANGAN =  $checkJadwalPraktek->RUANGAN;
+                $tujuan->SMF = $mappingPoli->SMF;
+                $tujuan->SHIFT = $checkJadwalPraktek->SHIFT;
+                $tujuan->DOKTER = $mappingDokter->DOKTER;
+                $tujuan->save();
+
+                //Penjamin Pendaftaran
+                $penjamin = new PenjaminModel();
+                    $penjamin->NOPEN = $pendaftaran->NOMOR;
+                    $penjamin->JENIS = 2;
+                    $penjamin->NOMOR = "";
+                    $penjamin->KELAS = 0;
+                $penjamin->save();
+
+                $antrian = AntrianRuanganModel::select(
+                    "TANGGAL",
+                    "NOMORDOKTER as NOMOR"
+                )->where([
+                    "REF" => $pendaftaran->NOMOR
+                ])->first();
+            }catch (Exception $exception) {
+                return response()->json([
+                    "metadata" => [
+                        "code" => 500,
+                        "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
+                    ],"response" => $exception->getMessage()
+                ], 500);
+            }
+            $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
             /*==========================================================*/
             $new->save();
 
@@ -250,10 +306,10 @@ class PengambilanNomorController extends Controller
                     "namapoli" => $mappingPoli->KODE."-".$mappingPoli->DESKRIPSI, /*Nama Poli*/
                     "namadokter" => $mappingDokter->NAMA,
                     "estimasidilayani" => 1615869169000, /*Waktu Pelayanan*/
-                    "sisakuotajkn" => "",
-                    "kuotajkn" => "",
-                    "sisakuotanonjkn" => "",
-                    "kuotanonjkn" => "",
+                    "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)-$terdaftar,
+                    "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE,
+                    "sisakuotanonjkn" => 0,
+                    "kuotanonjkn" => 0,
                     "keterangan" => "Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal."
                 ]
             ]);
