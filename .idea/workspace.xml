@@ -19,16 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek">
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/AntrianRuanganModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/PendaftaranModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/PendaftaranViaModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/PenjaminModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/TujuanModel.php" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/AntrianOnlineV2Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/AntrianOnlineV2Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/IndexModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelBridge/Pendaftaran/IndexModel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,14 +271,7 @@
       <workItem from="1641785774327" duration="2869000" />
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
-      <workItem from="1642209692562" duration="9353000" />
-    </task>
-    <task id="LOCAL-00013" summary="Perbaikan Validasi">
-      <created>1579622604840</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1579622604840</updated>
+      <workItem from="1642209692562" duration="9568000" />
     </task>
     <task id="LOCAL-00014" summary="Perbaikan Validasi Antrian">
       <created>1579623097366</created>
@@ -623,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642220425237</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik">
+      <created>1642224373636</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1642224373636</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,7 +638,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Perbaikan Model Bridge" />
     <MESSAGE value="Fixed Perbaikan Antrian" />
     <MESSAGE value="status =&gt; Code" />
     <MESSAGE value="Perbaikan Code" />
@@ -670,6 +662,7 @@
     <MESSAGE value="Change Log : &#10;Perbaikan File dan Penghapusan File Yang Tidak Digunakan" />
     <MESSAGE value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
     <MESSAGE value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
+    <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
   </component>
 </project>

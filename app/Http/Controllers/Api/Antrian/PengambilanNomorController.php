@@ -289,6 +289,7 @@ class PengambilanNomorController extends Controller
                     ],"response" => $exception->getMessage()
                 ], 500);
             }
+            $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
             /*==========================================================*/
             $new->save();
