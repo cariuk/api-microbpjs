@@ -16,14 +16,23 @@ Route::group(['namespace' => 'Api'], function() {
     Route::middleware('throttle:60,1')->post("token", "TokenController@getLogin");
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::group(['prefix' => 'antrian'], function () {
-            Route::post('/nomor', 'AntrianController@setData');
-            Route::post('/rekap', 'AntrianController@getRekap');
+        Route::group(['prefix' => 'antrian','namespace' => 'Antrian'], function () {
+            Route::post('/nomor', 'PengambilanNomorController@setData');
+
+            Route::post('/status', 'InformasiController@getStatus');
+            Route::post('/sisa', 'InformasiController@getSisaNomor');
+
+            Route::post('/batal', 'PembatalanController@setData');
+            Route::post('/cekin', 'CekInController@setData');
         });
 
-        Route::group(['prefix' => 'jadwaloperasi'], function () {
-            Route::post('/list', 'JadwalOperasiController@getData');
-            Route::post('/list/tanggal', 'JadwalOperasiController@getDataByTanggal');
+        Route::group(['prefix' => 'pasien','namespace' => 'Pasien'], function () {
+            Route::post('/baru', 'RegisterController@setData');
+        });
+
+        Route::group(['prefix' => 'jadwaloperasi','namespace' => 'JadwalOperasi'], function () {
+            Route::post('/list', 'ListDataController@getData');
+            Route::post('/list/tanggal', 'ListDataController@getDataByTanggal');
         });
     });
 });
