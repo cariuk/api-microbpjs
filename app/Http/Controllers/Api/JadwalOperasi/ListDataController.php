@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\JadwalOperasi;
 
 use App\Http\Controllers\Controller;
-use App\Model\MappingPoliModel;
 use App\ModelBridge\Pendaftaran\JadwalOperasiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class JadwalOperasiController extends Controller{
+class ListDataController extends Controller{
     function getData(Request $request){
         $validator = Validator::make(
             $request->all(), [
@@ -33,17 +32,17 @@ class JadwalOperasiController extends Controller{
             "bpm.DESKRIPSI as namapoli",
             DB::raw("IF(jadwal_operasi.STATUS=2,1,0) as terlaksana")
         )
-        ->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
-        ->join("pendaftaran.penjamin as pp",function ($join){
-            $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
-                "pp.JENIS",2
-            );
-        })
-        ->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
-        ->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
-        ->where([
-            "jadwal_operasi.status" => 1
-        ])->orderBy("jadwal_operasi.TANGGAL")->get();
+            ->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
+            ->join("pendaftaran.penjamin as pp",function ($join){
+                $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
+                    "pp.JENIS",2
+                );
+            })
+            ->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
+            ->where(DB::raw("master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS)") , $request->nopeserta)
+            ->where([
+                "jadwal_operasi.status" => 1
+            ])->orderBy("jadwal_operasi.TANGGAL")->get();
 
         if ($jadwalOperasi==null){
             return response()->json([
@@ -91,13 +90,13 @@ class JadwalOperasiController extends Controller{
             DB::raw("IF(pp.JENIS=2,master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS),'') as nopeserta"),
             DB::raw("ROUND((UNIX_TIMESTAMP(CURTIME(3))* 1000),0) as lastupdate")
         )->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
-        ->leftJoin("pendaftaran.penjamin as pp",function ($join){
-            $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
-                "pp.JENIS",2
-            );
-        })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
-        ->whereBetween("jadwal_operasi.TANGGAL",[$request->tanggalawal,$request->tanggalakhir])
-        ->orderBy("jadwal_operasi.TANGGAL")->get();
+            ->leftJoin("pendaftaran.penjamin as pp",function ($join){
+                $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
+                    "pp.JENIS",2
+                );
+            })->join("bpjs.poli_mapping as bpm","bpm.SMF","jadwal_operasi.SMF")
+            ->whereBetween("jadwal_operasi.TANGGAL",[$request->tanggalawal,$request->tanggalakhir])
+            ->orderBy("jadwal_operasi.TANGGAL")->get();
 
         return response()->json([
             "metadata" => [
