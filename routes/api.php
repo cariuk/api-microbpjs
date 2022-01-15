@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Api'], function() {
             Route::post('/status', 'InformasiController@getStatus');
             Route::post('/sisa', 'InformasiController@getSisaNomor');
 
-            Route::post('/batal', 'PembatalanController@setData');
+            Route::post('/batal', 'PembatalanNomorController@setData');
             Route::post('/cekin', 'CekInController@setData');
         });
 

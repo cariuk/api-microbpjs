@@ -4,30 +4,36 @@ namespace App\Http\Controllers\Api\Antrian;
 
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineModel;
+use App\Model\AntrianOnlineV2Model;
 use App\Model\MappingDPJPModel;
 use App\Model\MappingPoliAntrianModel;
 use App\Model\MappingPoliModel;
 use App\ModelBridge\Cetakan\AntrianRJModel;
 use App\ModelBridge\Cetakan\AntrianRJSMFModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
+use App\ModelBridge\Poliklinik\JadwalPraktekModel;
 use Grei\TanggalMerah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PHPUnit\Exception;
 
-class PengambilanNomorController extends Controller{
-    function setData(Request $request){
+class PengambilanNomorController extends Controller
+{
+    function setData(Request $request)
+    {
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
             'nik' => 'required|min:16|max:16',
-            'nohp' =>  'required|max:13',
+            'nohp' => 'required|max:13',
             'kodepoli' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:'.date("Y-m-d",strtotime("+90 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:' . date("Y-m-d", strtotime("+90 day")),
             'kodedokter' => 'required',
             'jampraktek' => 'required',
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
             'nomorreferensi' => 'required', //"{norujukan/kontrol pasien JKN,diisi kosong jika NON JKN}"
-        ],[
+        ], [
             "nomorkartu.required" => "Nomor Kartu Peserta Harus Terisi",
             "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
             "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
@@ -39,45 +45,45 @@ class PengambilanNomorController extends Controller{
             "kodepoli.required" => "Kode Poli Harus Terisi",
             "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
             "tanggalperiksa.date_format" => "Format Tanggal Periksa Harus Sesuai Format",
-            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal ".date("Y-m-d"),
-            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90".date("Y-m-d"),
+            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal " . date("Y-m-d"),
+            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90" . date("Y-m-d"),
             "kodedokter.required" => "Kode Dokter Harus Terisi",
             "jeniskunjungan.required" => "Jenis Kunjungan Harus Terisi",
             "jeniskunjungan.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
             "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Harus Terisi",
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => $validator->messages()->first()
                 ]
-            ],400);
+            ], 400);
         }
 
         /*Check Tanggal Merah*/
         $tanggal = new TanggalMerah();
-        $tanggal->set_date(str_replace("-","",$request->tanggalperiksa));
+        $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
 
-        if (($tanggal->is_holiday())||($tanggal->is_sunday())){
+        if (($tanggal->is_holiday()) || ($tanggal->is_sunday())) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => "Maaf Tanggal Tersebut Masuk Dalam Tanggal Merah Atau Hari Libur"
                 ]
-            ],400);
+            ], 400);
         }
 
         /*Check Tanggal Pengambilan Antrian*/
-        if ($request->tanggal==date("Y-m-d",strtotime("+1 day"))){
-            if (strtotime(date('Y-m-d')." 18:00:00") < strtotime(date("Y-m-d H:i:s"))){
+        if ($request->tanggal == date("Y-m-d", strtotime("+1 day"))) {
+            if (strtotime(date('Y-m-d') . " 18:00:00") < strtotime(date("Y-m-d H:i:s"))) {
                 return response()->json([
-                    "metadata" =>[
+                    "metadata" => [
                         "code" => 400,
                         "message" => "Maaf Pengambilan Nomor Antrian h+1"
                     ]
-                ],400);
+                ], 400);
             }
         }
 
@@ -86,43 +92,43 @@ class PengambilanNomorController extends Controller{
             "NOMOR" => $request->nomorkartu,
             "JENIS" => 2,
         ]);
-        if (isset($request->norm)){
+        if (isset($request->norm)) {
             $validator = Validator::make(
                 $request->all(), [
                 'norm' => 'numeric',
-            ],[
+            ], [
                 "norm.numeric" => "Nomor Rekam Medik Berupa Angka",
             ]);
 
-            if ($validator->fails()){
+            if ($validator->fails()) {
                 return response()->json([
-                    "metadata" =>[
+                    "metadata" => [
                         "code" => 400,
                         "message" => $validator->messages()->first()
                     ]
-                ],400);
+                ], 400);
             }
 
             $checkPasien = $checkPasien->where([
                 "NORM" => $request->norm
             ])->first();
-            if ($checkPasien==null){
+            if ($checkPasien == null) {
                 return response()->json([
-                    "metadata" =>[
+                    "metadata" => [
                         "code" => 400,
                         "message" => "Maaf, Nomor BPJS Dan Nomor Rekam Medik Yang Dimasukkan Tidak Sesuai, Untuk Informasi Lebih Lanjut Harap Datang Ke Front Office Untuk Pencocokan Data Terlebih Dahulu"
                     ]
-                ],400);
+                ], 400);
             }
-        }else{
+        } else {
             $checkPasien = $checkPasien->first();
-            if ($checkPasien==null){
+            if ($checkPasien == null) {
                 return response()->json([
-                    "metadata" =>[
+                    "metadata" => [
                         "code" => 400,
                         "message" => "Maaf, Nomor BPJS Anda Belum Terdaftar Pada Sistem Kami, Harap Membuat Nomor Rekam Medik Terlebih Dahulu Atau Bisa Datang Langsung Ke Front Office RSIA Ananda"
                     ]
-                ],400);
+                ], 400);
             }
 
 
@@ -134,22 +140,22 @@ class PengambilanNomorController extends Controller{
             "KODE_POLI" => $request->kodepoli
         ])->first();
 
-        if ($mappingPoliantrian==null){
+        if ($mappingPoliantrian == null) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => "Kode Poli Tidak Sesuai"
                 ]
-            ],400);
+            ], 400);
         }
 
-        if ((($mappingPoliantrian->KODE_ANTRIAN==null)||($mappingPoliantrian->KODE_ANTRIAN==""))){
+        if ((($mappingPoliantrian->KODE_ANTRIAN == null) || ($mappingPoliantrian->KODE_ANTRIAN == ""))) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => " Kode Poli Belum Tersedia Antriannya"
                 ]
-            ],400);
+            ], 400);
         }
         /*=======================================================================================*/
 
@@ -157,38 +163,107 @@ class PengambilanNomorController extends Controller{
         $mappingPoli = MappingPoliModel::where([
             "KODE" => $mappingPoliantrian->KODE_POLI
         ])->first();
-        if ($mappingPoli==null){
+        if ($mappingPoli == null) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => "Kode Poli Tidak Sesuai"
                 ]
-            ],400);
+            ], 400);
         }
         /*=======================================================================================*/
 
         /*Get Mapping Kode Dokter Dengan Kode Dokter Internal*/
-        $mappingDokter = MappingDPJPModel::where([
+        $mappingDokter = MappingDPJPModel::select(
+            "DOKTER",
+            DB::raw("master.getNamaLengkapDokter(DOKTER) AS NAMA")
+        )->where([
             "KODE" => $request->kodedokter
         ])->first();
-        if ($mappingDokter==null){
+        if ($mappingDokter == null) {
             return response()->json([
-                "metadata" =>[
+                "metadata" => [
                     "code" => 400,
                     "message" => "Maaf, Dokter Belum Tersedia"
                 ]
-            ],400);
+            ], 400);
         }
-        /*=======================================================================================*/
 
-        /*Check Data Antrian*/
-        $checkAntrian = AntrianOnlineModel::where([
-            "NOMOR_KARTU" => $request->nomorkartu,
-            "KODE_POLI" => $request->kodepoli,
-            "NOMOR_REFERENSI" => $request->nomorreferensi,
-            "TANGGAL_PERIKSA" => $request->tanggalperiksa
+        $haripraktek = date("N", strtotime($request->tanggalperiksa));
+        $checkJadwalPraktek = JadwalPraktekModel::where([
+            "BPJS" => 1,
+            "HARI" => $haripraktek,
+            "DOKTER" => $mappingDokter->DOKTER,
+            "STATUS" => 1
         ])->first();
         /*=======================================================================================*/
 
+        /*Check Data Antrian*/
+        $checkAntrian = AntrianOnlineV2Model::where([
+            "NOMOR_KARTU" => $request->nomorkartu,
+            "KODE_POLI" => $request->kodepoli,
+            "NOMOR_REFERENSI" => $request->nomorreferensi,
+        ])->first();
+        /*=======================================================================================*/
+        try {
+            if ($checkAntrian != null) {
+                if ($checkAntrian->STATUS == 1) {
+                    return response()->json([
+                        "metadata" => [
+                            "code" => 400,
+                            "message" => "Maaf, Anda Sudah Mengambil Antrian Silahkan Cek Status Antrian Anda"
+                        ]
+                    ], 400);
+                }
+            }
+
+            $new = new AntrianOnlineV2Model();
+            $new->ID = AntrianOnlineV2Model::generateNOMOR();
+            $new->NOMOR_KARTU = $request->nomorkartu;
+            $new->NIK = $request->nik;
+            $new->KODE_POLI = $request->kodepoli;
+            $new->NOMOR_RM = $checkPasien->NORM;
+            $new->NO_HP = $request->nohp;
+            $new->TANGGAL_PERIKSA = $request->tanggalperiksa;
+            $new->KODE_DOKTER = $request->kodedokter;
+            $new->JAM_PRAKTEK = $request->jampraktek;
+            $new->JENIS_KUNJUNGAN = $request->jeniskunjungan;
+            $new->NOMOR_REFERENSI = $request->nomorreferensi;
+            $new->CEKIN = 0;
+            $new->STATUS = 1;
+            $new->TANGGAL_BUAT = now();
+            /*Get Nomor Antrian SIMRS*/
+            $new->NOMOR_ANTRIAN = ""; /*Antrian Poli*/
+            /*==========================================================*/
+            $new->save();
+
+            return response()->json([
+                "metadata" => [
+                    "code" => 200,
+                    "message" => "Ok"
+                ],
+                "response" => [
+                    "nomorantrean" => $new->KODE_POLI." ".$new->NOMOR_ANTRIAN,
+                    "angkaantrean" => $new->NOMOR_ANTRIAN,
+                    "kodebooking" =>  $new->ID,
+                    "norm" => $new->NOMOR_RM, /*Nomor RM*/
+                    "namapoli" => $mappingPoli->KODE."-".$mappingPoli->DESKRIPSI, /*Nama Poli*/
+                    "namadokter" => $mappingDokter->NAMA,
+                    "estimasidilayani" => 1615869169000, /*Waktu Pelayanan*/
+                    "sisakuotajkn" => "",
+                    "kuotajkn" => "",
+                    "sisakuotanonjkn" => "",
+                    "kuotanonjkn" => "",
+                    "keterangan" => "Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal."
+                ]
+            ]);
+        } catch (Exception $exception) {
+            return response()->json([
+                "metadata" => [
+                    "code" => 500,
+                    "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
+                ],"response" => $exception->getMessage()
+            ], 500);
+        }
     }
 }

@@ -19,26 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log : &#10;Restrukturisasi Api Antrian Untuk Versi 2">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Laravel_4_27_21__7_13_PM.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Model/MappingDPJPModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuAsuransiModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mirkobpjs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/microbpjs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ConfirmPasswordController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi">
+      <change afterPath="$PROJECT_DIR$/app/Model/AntrianOnlineV2Model.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Poliklinik/IndexModel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Poliklinik/JadwalPraktekModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -288,21 +276,7 @@
       <workItem from="1641785774327" duration="2869000" />
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
-      <workItem from="1642209692562" duration="1827000" />
-    </task>
-    <task id="LOCAL-00010" summary="Perbaikan">
-      <created>1579503958701</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1579503958701</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Perbaikan">
-      <created>1579504213763</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1579504213763</updated>
+      <workItem from="1642209692562" duration="6650000" />
     </task>
     <task id="LOCAL-00012" summary="Perbaikan">
       <created>1579505144605</created>
@@ -633,7 +607,21 @@
       <option name="project" value="LOCAL" />
       <updated>1642212514385</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Change Log : &#10;Perbaikan File dan Penghapusan File Yang Tidak Digunakan">
+      <created>1642212839604</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1642212839604</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi">
+      <created>1642212870433</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1642212870434</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,8 +643,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Perbaikan Validasi data" />
-    <MESSAGE value="Fixed Perbaikan Pengambilan Antrian" />
     <MESSAGE value="Pembuatan Model Bridge" />
     <MESSAGE value="Perbaikan Model Bridge" />
     <MESSAGE value="Fixed Perbaikan Antrian" />
@@ -680,6 +666,8 @@
     <MESSAGE value="Perbaikan Status" />
     <MESSAGE value="Perbaika Unrequired Nomor Tlp" />
     <MESSAGE value="Change Log : &#10;Restrukturisasi Api Antrian Untuk Versi 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log : &#10;Restrukturisasi Api Antrian Untuk Versi 2" />
+    <MESSAGE value="Change Log : &#10;Perbaikan File dan Penghapusan File Yang Tidak Digunakan" />
+    <MESSAGE value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
   </component>
 </project>
