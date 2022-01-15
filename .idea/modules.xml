@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../microbpjs/.idea/mirkobpjs.iml" filepath="$PROJECT_DIR$/../microbpjs/.idea/mirkobpjs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/microbpjs.iml" filepath="$PROJECT_DIR$/.idea/microbpjs.iml" />
     </modules>
   </component>
 </project>

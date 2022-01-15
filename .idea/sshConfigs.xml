@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="36.37.114.39" id="650239ee-38e8-41d8-be53-a4854e6d8d55" port="22" customName="Devel" nameFormat="CUSTOM" username="apps">
+        <option name="customName" value="Devel" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="36.37.114.42" id="ba1c28c5-07e0-4798-98c8-965f19db1910" port="22" customName="Prod" nameFormat="CUSTOM">
+        <option name="customName" value="Prod" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="192.168.10.49" id="f7a37bce-fd3d-4d5e-b9c9-eedd0cdd7d71" port="22" customName="RSIA Amanat" nameFormat="CUSTOM">
+        <option name="customName" value="RSIA Amanat" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="139.99.118.21" id="cceac3ee-3fce-4542-a362-74a9b614c90d" port="2244" customName="RSU Cahaya Medika" nameFormat="CUSTOM">
+        <option name="customName" value="RSU Cahaya Medika" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="10.10.70.9" id="74658b0a-99ff-4c35-b535-7c8509868fe9" port="22" customName="RSKDIA ST FATIMAH" nameFormat="CUSTOM">
+        <option name="customName" value="RSKDIA ST FATIMAH" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="192.168.2.216" id="04a8765f-864a-4baf-ad6c-b9e1dc2682f3" port="22" customName="RSU Marina Permata" nameFormat="CUSTOM">
+        <option name="customName" value="RSU Marina Permata" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

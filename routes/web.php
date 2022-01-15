@@ -15,7 +15,7 @@ Route::get('/', function () {
     return response()->json([
         "metadata" => [
             "status" => 200,
-            "message" => "Api Micro BPJS V 1.0"
+            "message" => "Api Micro BPJS V 2.0"
         ]
     ]);
 });
