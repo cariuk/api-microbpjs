@@ -220,7 +220,7 @@ class PengambilanNomorController extends Controller
                         "metadata" => [
                             "code" => 400,
                             "message" => "Maaf, Anda Sudah Mengambil Antrian Silahkan Cek Status Antrian Anda"
-                        ]
+                        ], "response" => $checkAntrian
                     ], 400);
                 }
             }
@@ -291,7 +291,8 @@ class PengambilanNomorController extends Controller
             }
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
-            /*==========================================================*/
+            $new->ESTIMASI_DILAYANI = strtotime("+".(5*$new->NOMOR_ANTRIAN)." minutes",strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI))*1000;
+                /*==========================================================*/
             $new->save();
 
             return response()->json([
@@ -306,7 +307,7 @@ class PengambilanNomorController extends Controller
                     "norm" => $new->NOMOR_RM, /*Nomor RM*/
                     "namapoli" => $mappingPoli->KODE."-".$mappingPoli->DESKRIPSI, /*Nama Poli*/
                     "namadokter" => $mappingDokter->NAMA,
-                    "estimasidilayani" => 1615869169000, /*Waktu Pelayanan*/
+                    "estimasidilayani" => $new->ESTIMASI_DILAYANI, /*Waktu Pelayanan*/
                     "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)-$terdaftar,
                     "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE,
                     "sisakuotanonjkn" => 0,

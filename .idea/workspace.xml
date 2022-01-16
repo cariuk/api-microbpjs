@@ -271,14 +271,7 @@
       <workItem from="1641785774327" duration="2869000" />
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
-      <workItem from="1642209692562" duration="9568000" />
-    </task>
-    <task id="LOCAL-00014" summary="Perbaikan Validasi Antrian">
-      <created>1579623097366</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1579623097366</updated>
+      <workItem from="1642209692562" duration="10617000" />
     </task>
     <task id="LOCAL-00015" summary="Perbaikan Validasi Antrian">
       <created>1579623624782</created>
@@ -616,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642224373636</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik">
+      <created>1642224480713</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1642224480713</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
