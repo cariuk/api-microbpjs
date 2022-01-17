@@ -58,10 +58,10 @@ class PengambilanNomorController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => $validator->messages()->first()
                 ]
-            ], 400);
+            ], 201);
         }
 
         /*Check Tanggal Merah*/
@@ -71,10 +71,10 @@ class PengambilanNomorController extends Controller
         if (($tanggal->is_holiday()) || ($tanggal->is_sunday())) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => "Maaf Tanggal Tersebut Masuk Dalam Tanggal Merah Atau Hari Libur"
                 ]
-            ], 400);
+            ], 201);
         }
 
         /*Check Tanggal Pengambilan Antrian*/
@@ -82,10 +82,10 @@ class PengambilanNomorController extends Controller
             if (strtotime(date('Y-m-d') . " 18:00:00") < strtotime(date("Y-m-d H:i:s"))) {
                 return response()->json([
                     "metadata" => [
-                        "code" => 400,
+                        "code" => 201,
                         "message" => "Maaf Pengambilan Nomor Antrian h+1"
                     ]
-                ], 400);
+                ], 201);
             }
         }
 
@@ -105,10 +105,10 @@ class PengambilanNomorController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     "metadata" => [
-                        "code" => 400,
+                        "code" => 201,
                         "message" => $validator->messages()->first()
                     ]
-                ], 400);
+                ], 201);
             }
 
             $checkPasien = $checkPasien->where([
@@ -117,20 +117,20 @@ class PengambilanNomorController extends Controller
             if ($checkPasien == null) {
                 return response()->json([
                     "metadata" => [
-                        "code" => 400,
+                        "code" => 201,
                         "message" => "Maaf, Nomor BPJS Dan Nomor Rekam Medik Yang Dimasukkan Tidak Sesuai, Untuk Informasi Lebih Lanjut Harap Datang Ke Front Office Untuk Pencocokan Data Terlebih Dahulu"
                     ]
-                ], 400);
+                ], 201);
             }
         } else {
             $checkPasien = $checkPasien->first();
             if ($checkPasien == null) {
                 return response()->json([
                     "metadata" => [
-                        "code" => 400,
+                        "code" => 201,
                         "message" => "Maaf, Nomor BPJS Anda Belum Terdaftar Pada Sistem Kami, Harap Membuat Nomor Rekam Medik Terlebih Dahulu Atau Bisa Datang Langsung Ke Front Office RSIA Ananda"
                     ]
-                ], 400);
+                ], 201);
             }
 
 
@@ -145,19 +145,19 @@ class PengambilanNomorController extends Controller
         if ($mappingPoliantrian == null) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => "Poli Tidak Ditemukan"
                 ]
-            ], 400);
+            ], 201);
         }
 
         if ((($mappingPoliantrian->KODE_ANTRIAN == null) || ($mappingPoliantrian->KODE_ANTRIAN == ""))) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => "Poli Tidak Ditemukan"
                 ]
-            ], 400);
+            ], 201);
         }
         /*=======================================================================================*/
 
@@ -168,10 +168,10 @@ class PengambilanNomorController extends Controller
         if ($mappingPoli == null) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => "Poli Tidak Ditemukan"
                 ]
-            ], 400);
+            ], 201);
         }
         /*=======================================================================================*/
 
@@ -185,10 +185,10 @@ class PengambilanNomorController extends Controller
         if ($mappingDokter == null) {
             return response()->json([
                 "metadata" => [
-                    "code" => 400,
+                    "code" => 201,
                     "message" => "Maaf, Dokter Belum Tersedia"
                 ]
-            ], 400);
+            ], 201);
         }
 
         $haripraktek = date("N", strtotime($request->tanggalperiksa));
@@ -209,21 +209,20 @@ class PengambilanNomorController extends Controller
 
         /*Check Data Antrian*/
         $checkAntrian = AntrianOnlineV2Model::where([
+            "TANGGAL_PERIKSA" => $request->tanggalperiksa,
             "NOMOR_KARTU" => $request->nomorkartu,
             "KODE_POLI" => $request->kodepoli,
-            "NOMOR_REFERENSI" => $request->nomorreferensi,
+            "STATUS" => 1
         ])->first();
         /*=======================================================================================*/
         try {
             if ($checkAntrian != null) {
-                if ($checkAntrian->STATUS == 1) {
-                    return response()->json([
-                        "metadata" => [
-                            "code" => 400,
-                            "message" => "Maaf, Anda Sudah Mengambil Antrian Silahkan Cek Status Antrian Anda"
-                        ], "response" => $checkAntrian
-                    ], 400);
-                }
+                return response()->json([
+                    "metadata" => [
+                        "code" => 201,
+                        "message" => "Nomor Antrean Hanya Dapat Diambil 1 Kali Pada Tanggal Yang Sama"
+                    ]
+                ], 201);
             }
 
             $new = new AntrianOnlineV2Model();
