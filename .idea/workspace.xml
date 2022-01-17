@@ -19,10 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Perbaikan Informasi">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Perbaikan Informasi dan Pengambilan Nomor Antrian">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/CekInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/CekInController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,14 +282,7 @@
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
       <workItem from="1642209692562" duration="12014000" />
-      <workItem from="1642387803833" duration="8666000" />
-    </task>
-    <task id="LOCAL-00020" summary="Fixed Perbaikan Pengambilan Antrian">
-      <created>1579678448185</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1579678448185</updated>
+      <workItem from="1642387803833" duration="9710000" />
     </task>
     <task id="LOCAL-00021" summary="Fixed Perbaikan Pengambilan Antrian">
       <created>1579678569614</created>
@@ -626,7 +620,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642394655452</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Change Log :&#10;Perbaikan Informasi dan Pengambilan Nomor Antrian">
+      <created>1642398002298</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1642398002299</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +649,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed Filter Tanggal" />
     <MESSAGE value="Add Handler" />
     <MESSAGE value="Fixed" />
     <MESSAGE value="1. Tanggal Periksa rulenya mau di perbaiki&#10;2. Poli Eksekutif dibuat Optional&#10;3. Filter Tanggal Untuk get jadwal operasi tdk di limit +7" />
@@ -673,6 +673,7 @@
     <MESSAGE value="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Perbaika Informasi Alert Pengambilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Perbaikan Informasi" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Perbaikan Informasi" />
+    <MESSAGE value="Change Log :&#10;Perbaikan Informasi dan Pengambilan Nomor Antrian" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Perbaikan Informasi dan Pengambilan Nomor Antrian" />
   </component>
 </project>

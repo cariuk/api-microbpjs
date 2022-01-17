@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Antrian;
 
 use App\Http\Controllers\Controller;
+use App\Model\AntrianOnlineV2Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
@@ -27,6 +28,34 @@ class CekInController extends Controller{
             ],400);
         }
         try{
+            $checkAntrian = AntrianOnlineV2Model::where([
+                "ID" => $request->kodebooking,
+                "STATUS" => 1
+            ])->first();
+
+            if ($checkAntrian == null){
+                return response()->json([
+                    "metadata" =>[
+                        "code" => 201,
+                        "message" => "Antrean Tidak Ditemukan Atau Sudah DiBatalakan"
+                    ]
+                ],201);
+            }
+
+            if ($checkAntrian->CEKIN!=null){
+                return response()->json([
+                    "metadata" =>[
+                        "code" => 201,
+                        "message" => "Antrean Sudah Cek In",
+                    ]
+                ],201);
+            }
+            AntrianOnlineV2Model::where([
+                "ID" => $request->kodebooking,
+                "STATUS" => 1
+            ])->update([
+                "CEKIN" => $request->waktu
+            ]);
 
             return response()->json([
                 "metadata" =>[
