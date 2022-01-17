@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Antrian;
 
 use App\Http\Controllers\Controller;
+use App\Model\AntrianOnlineV2Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
@@ -27,6 +28,28 @@ class PembatalanNomorController extends Controller{
             ],400);
         }
         try{
+            $checkAntrian = AntrianOnlineV2Model::where([
+                "ID" => $request->kodebooking,
+                "STATUS" => 1
+            ])->whereNull("CEKIN")->first();
+
+            if ($checkAntrian == null){
+                return response()->json([
+                    "metadata" =>[
+                        "code" => 400,
+                        "message" => "Maaf! Kode Booking Tidak Valid"
+                    ]
+                ],400);
+            }
+
+            AntrianOnlineV2Model::where([
+                "ID" => $request->kodebooking,
+                "STATUS" => 1
+            ])->whereNull("CEKIN")->update([
+                "STATUS" => 0,
+                "ALASAN_PEMBATALAN" => $request->keterangan,
+                "WAKTU_PEMBATALAN" => now()
+            ]);
 
             return response()->json([
                 "metadata" =>[
