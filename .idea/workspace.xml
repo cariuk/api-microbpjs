@@ -19,8 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Fixed Pembatalan Nomor Antrian">
-      <change beforePath="$PROJECT_DIR$/.idea/sshConfigs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
@@ -274,14 +273,7 @@
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
       <workItem from="1642209692562" duration="12014000" />
-      <workItem from="1642387803833" duration="4295000" />
-    </task>
-    <task id="LOCAL-00017" summary="Perbaikan Validasi data">
-      <created>1579658631650</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1579658631650</updated>
+      <workItem from="1642387803833" duration="5042000" />
     </task>
     <task id="LOCAL-00018" summary="Perbaikan Validasi data">
       <created>1579661778517</created>
@@ -619,7 +611,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642387931136</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian">
+      <created>1642392889262</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1642392889262</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,7 +640,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Perbaikan Code" />
     <MESSAGE value="Perbaikan Response Jadwal Operasi" />
     <MESSAGE value="Fixed Perbaikan list" />
     <MESSAGE value="Fixed Filter Tanggal" />
@@ -666,6 +664,7 @@
     <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
     <MESSAGE value="Change Log : &#10;Penambahaan Field Pengambilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
+    <MESSAGE value="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian" />
   </component>
 </project>

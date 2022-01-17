@@ -138,7 +138,14 @@ class InformasiController extends Controller{
                );
             })->orderBy("NOMORDOKTER","DESC")->first();
 
-            $keterangan = ($terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN)<=0?"Nomor Antrian Anda Sudah Terpainggil / Terlewatkan Silahkan Melaporkan Diri Anda Kepetugas Kami ":"Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal.";
+            if ($terlayani==null){
+                $sisaantrean = $checkAntrian->NOMOR_ANTRIAN;
+                $keterangan = "Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal.";
+            }else{
+                $sisaantrean = ($terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN)<=0?0:$terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN;
+                $keterangan = ($terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN)<=0?"Nomor Antrian Anda Sudah Terpainggil / Terlewatkan Silahkan Melaporkan Diri Anda Kepetugas Kami ":"Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal.";
+            }
+
             return response()->json([
                 "metadata" => [
                     "code" => 200,
@@ -148,7 +155,7 @@ class InformasiController extends Controller{
                     "namapoli" => $mappingPoli->KODE." - ".$mappingPoli->DESKRIPSI, /*Nama Poli*/
                     "namadokter" => $mappingDokter->NAMA,
                     "totalantrean" => $terdaftar, /*Total Antrian*/
-                    "sisaantrean" => ($terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN)<=0?0:$terlayani->NOMORDOKTER-$checkAntrian->NOMOR_ANTRIAN,
+                    "sisaantrean" => $sisaantrean,
                     "antreanpanggil" => $checkAntrian->KODE_POLI." ".$checkAntrian->NOMOR_ANTRIAN,
                     "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)-$terdaftar,
                     "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE,

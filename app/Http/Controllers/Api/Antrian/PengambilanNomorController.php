@@ -46,7 +46,7 @@ class PengambilanNomorController extends Controller
             "nohp.max" => "Nomor Handphone Maximal 13 Digit",
             "kodepoli.required" => "Kode Poli Harus Terisi",
             "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
-            "tanggalperiksa.date_format" => "Format Tanggal Periksa Harus Sesuai Format",
+            "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai, format yang benar adalah yyyy-mm-dd",
             "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal " . date("Y-m-d"),
             "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90" . date("Y-m-d"),
             "kodedokter.required" => "Kode Dokter Harus Terisi",
@@ -146,7 +146,7 @@ class PengambilanNomorController extends Controller
             return response()->json([
                 "metadata" => [
                     "code" => 400,
-                    "message" => "Kode Poli Tidak Sesuai"
+                    "message" => "Poli Tidak Ditemukan"
                 ]
             ], 400);
         }
@@ -155,7 +155,7 @@ class PengambilanNomorController extends Controller
             return response()->json([
                 "metadata" => [
                     "code" => 400,
-                    "message" => " Kode Poli Belum Tersedia Antriannya"
+                    "message" => "Poli Tidak Ditemukan"
                 ]
             ], 400);
         }
@@ -169,7 +169,7 @@ class PengambilanNomorController extends Controller
             return response()->json([
                 "metadata" => [
                     "code" => 400,
-                    "message" => "Kode Poli Tidak Sesuai"
+                    "message" => "Poli Tidak Ditemukan"
                 ]
             ], 400);
         }
