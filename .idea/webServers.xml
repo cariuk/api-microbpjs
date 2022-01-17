@@ -3,51 +3,17 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="0266c388-e5b0-4243-b37d-625b08bfaa21" name="Devel" url="http://36.37.114.39">
-        <fileTransfer host="36.37.114.39" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+        <fileTransfer rootFolder="/home/microbpjs" accessType="SFTP" host="192.168.6.30" port="22" sshConfigId="937831ab-0b6c-4ae0-bee2-9ff1fedf0b11" sshConfig="Devel">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
       <webServer id="0dc49b2b-f957-462f-955b-0c66df587e32" name="Prod" url="http://36.37.114.42">
-        <fileTransfer host="36.37.114.42" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
+        <fileTransfer rootFolder="/home/microbpjs" accessType="SFTP" host="192.168.6.30" port="22" sshConfigId="937831ab-0b6c-4ae0-bee2-9ff1fedf0b11" sshConfig="Devel">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="113806ef-5b57-4768-b70b-ad3ee19713f0" name="RSIA Amanat" url="http://192.168.10.49">
-        <fileTransfer host="192.168.10.49" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="94b40b2d-78a5-45e2-a355-98548a58bc3c" name="RSU Cahaya Medika" url="http://139.99.118.21/">
-        <fileTransfer host="139.99.118.21" port="2244" rootFolder="/home/microbpjs" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="2244" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="a2df3279-90a6-4531-a4e7-2e38b2620192" name="RSKDIA ST FATIMAH" url="http://10.10.70.9">
-        <fileTransfer host="10.10.70.9" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="ba43d5d2-e814-4e19-ba19-290dd0f16807" name="RSU Marina Permata" url="http://192.168.2.216">
-        <fileTransfer host="192.168.2.216" port="22" rootFolder="/home/microbpjs" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>
