@@ -72,7 +72,7 @@ class PengambilanNomorController extends Controller
             return response()->json([
                 "metadata" => [
                     "code" => 201,
-                    "message" => "Maaf Tanggal Tersebut Masuk Dalam Tanggal Merah Atau Hari Libur"
+                    "message" => "Pendaftaran ke Poli Ini Sedang Tutup, Karena Masuk Dalam Tanggal Merah Atau Hari Libur"
                 ]
             ], 201);
         }
@@ -127,43 +127,19 @@ class PengambilanNomorController extends Controller
             if ($checkPasien == null) {
                 return response()->json([
                     "metadata" => [
-                        "code" => 201,
+                        "code" => 202,
                         "message" => "Maaf, Nomor BPJS Anda Belum Terdaftar Pada Sistem Kami, Harap Membuat Nomor Rekam Medik Terlebih Dahulu Atau Bisa Datang Langsung Ke Front Office RSIA Ananda"
                     ]
-                ], 201);
+                ], 202);
             }
 
 
         }
         /*=======================================================================================*/
 
-        /*CheckMapping*/
-        $mappingPoliantrian = MappingPoliAntrianModel::where([
-            "KODE_POLI" => $request->kodepoli
-        ])->first();
-
-        if ($mappingPoliantrian == null) {
-            return response()->json([
-                "metadata" => [
-                    "code" => 201,
-                    "message" => "Poli Tidak Ditemukan"
-                ]
-            ], 201);
-        }
-
-        if ((($mappingPoliantrian->KODE_ANTRIAN == null) || ($mappingPoliantrian->KODE_ANTRIAN == ""))) {
-            return response()->json([
-                "metadata" => [
-                    "code" => 201,
-                    "message" => "Poli Tidak Ditemukan"
-                ]
-            ], 201);
-        }
-        /*=======================================================================================*/
-
         /*Get Mapping SMF*/
         $mappingPoli = MappingPoliModel::where([
-            "KODE" => $mappingPoliantrian->KODE_POLI
+            "KODE" => $request->kodepoli
         ])->first();
         if ($mappingPoli == null) {
             return response()->json([
@@ -182,6 +158,7 @@ class PengambilanNomorController extends Controller
         )->where([
             "KODE" => $request->kodedokter
         ])->first();
+
         if ($mappingDokter == null) {
             return response()->json([
                 "metadata" => [
@@ -192,12 +169,25 @@ class PengambilanNomorController extends Controller
         }
 
         $haripraktek = date("N", strtotime($request->tanggalperiksa));
-        $checkJadwalPraktek = JadwalPraktekModel::where([
-            "BPJS" => 1,
-            "HARI" => $haripraktek,
-            "DOKTER" => $mappingDokter->DOKTER,
-            "STATUS" => 1
-        ])->first();
+        $checkJadwalPraktek = JadwalPraktekModel::select(
+            "jadwal_praktek.*",
+            "dokter_smf.SMF"
+        )->where([
+            "dokter_smf.SMF" => $mappingPoli->SMF,
+            "jadwal_praktek.BPJS" => 1,
+            "jadwal_praktek.HARI" => $haripraktek,
+            "jadwal_praktek.DOKTER" => $mappingDokter->DOKTER,
+            "jadwal_praktek.STATUS" => 1
+        ])->join("master.dokter_smf","dokter_smf.DOKTER","jadwal_praktek.DOKTER")->first();
+
+        if ($checkJadwalPraktek==null){
+            return response()->json([
+                "metadata" => [
+                    "code" => 201,
+                    "message" => "Jadwal Dokter Tersebut Belum Tersedia, Silahkan Reschedule Tanggal dan Jam Praktek Lainnya"
+                ]
+            ], 201);
+        }
 
         $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
         ->where([
@@ -205,6 +195,15 @@ class PengambilanNomorController extends Controller
             "ruangan" => $checkJadwalPraktek->RUANGAN,
             "shift" => $checkJadwalPraktek->SHIFT
         ])->count();
+
+        if ($terdaftar >= ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)){
+            return response()->json([
+                "metadata" => [
+                    "code" => 201,
+                    "message" => "Kuota Jadwal Dokter Tersebut Telah Penuh, Silahkan Reschedule Tanggal dan Jam Praktek Lainnya"
+                ]
+            ], 201);
+        }
         /*=======================================================================================*/
 
         /*Check Data Antrian*/
@@ -221,7 +220,8 @@ class PengambilanNomorController extends Controller
                     "metadata" => [
                         "code" => 201,
                         "message" => "Nomor Antrean Hanya Dapat Diambil 1 Kali Pada Tanggal Yang Sama"
-                    ]
+                    ],
+                    "response" => $checkAntrian
                 ], 201);
             }
 
