@@ -20,6 +20,9 @@
       <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="192.168.2.216" id="04a8765f-864a-4baf-ad6c-b9e1dc2682f3" port="22" customName="RSU Marina Permata" nameFormat="CUSTOM">
         <option name="customName" value="RSU Marina Permata" />
       </sshConfig>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="36.37.114.39" id="937831ab-0b6c-4ae0-bee2-9ff1fedf0b11" port="22" customName="Devel" nameFormat="CUSTOM">
+        <option name="customName" value="Devel" />
+      </sshConfig>
     </configs>
   </component>
 </project>

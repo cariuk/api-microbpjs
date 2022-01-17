@@ -200,10 +200,11 @@ class PengambilanNomorController extends Controller
         ])->first();
 
         $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
-            ->where("dokter", $checkJadwalPraktek->DOKTER)
-            ->where("ruangan", $checkJadwalPraktek->RUANGAN)
-            ->where("shift", $checkJadwalPraktek->SHIFT)
-            ->count();
+        ->where([
+            "dokter" => $checkJadwalPraktek->DOKTER,
+            "ruangan" => $checkJadwalPraktek->RUANGAN,
+            "shift" => $checkJadwalPraktek->SHIFT
+        ])->count();
         /*=======================================================================================*/
 
         /*Check Data Antrian*/
@@ -289,6 +290,7 @@ class PengambilanNomorController extends Controller
                     ],"response" => $exception->getMessage()
                 ], 500);
             }
+
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
             $new->ESTIMASI_DILAYANI = strtotime("+".(5*$new->NOMOR_ANTRIAN)." minutes",strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI))*1000;
@@ -305,7 +307,7 @@ class PengambilanNomorController extends Controller
                     "angkaantrean" => $new->NOMOR_ANTRIAN,
                     "kodebooking" =>  $new->ID,
                     "norm" => $new->NOMOR_RM, /*Nomor RM*/
-                    "namapoli" => $mappingPoli->KODE."-".$mappingPoli->DESKRIPSI, /*Nama Poli*/
+                    "namapoli" => $mappingPoli->KODE." - ".$mappingPoli->DESKRIPSI, /*Nama Poli*/
                     "namadokter" => $mappingDokter->NAMA,
                     "estimasidilayani" => $new->ESTIMASI_DILAYANI, /*Waktu Pelayanan*/
                     "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)-$terdaftar,

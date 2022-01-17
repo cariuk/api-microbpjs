@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Fixed Pembatalan Nomor Antrian">
+      <change beforePath="$PROJECT_DIR$/.idea/sshConfigs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -271,21 +273,8 @@
       <workItem from="1641785774327" duration="2869000" />
       <workItem from="1641903278959" duration="957000" />
       <workItem from="1641944915610" duration="2624000" />
-      <workItem from="1642209692562" duration="10617000" />
-    </task>
-    <task id="LOCAL-00015" summary="Perbaikan Validasi Antrian">
-      <created>1579623624782</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1579623624782</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Perbaikan Validasi data">
-      <created>1579624383816</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1579624383816</updated>
+      <workItem from="1642209692562" duration="12014000" />
+      <workItem from="1642387803833" duration="4295000" />
     </task>
     <task id="LOCAL-00017" summary="Perbaikan Validasi data">
       <created>1579658631650</created>
@@ -616,7 +605,21 @@
       <option name="project" value="LOCAL" />
       <updated>1642224480713</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Change Log : &#10;Penambahaan Field Pengambilan Nomor Antrian">
+      <created>1642303508075</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1642303508076</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Change Log :&#10;Fixed Pembatalan Nomor Antrian">
+      <created>1642387931136</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1642387931136</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,8 +641,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed Perbaikan Antrian" />
-    <MESSAGE value="status =&gt; Code" />
     <MESSAGE value="Perbaikan Code" />
     <MESSAGE value="Perbaikan Response Jadwal Operasi" />
     <MESSAGE value="Fixed Perbaikan list" />
@@ -663,6 +664,8 @@
     <MESSAGE value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
     <MESSAGE value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
     <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
+    <MESSAGE value="Change Log : &#10;Penambahaan Field Pengambilan Nomor Antrian" />
+    <MESSAGE value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
   </component>
 </project>
