@@ -20,7 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Perubahaan Method Post Ke Get">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/TokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/TokenController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -285,14 +284,7 @@
       <workItem from="1642845388385" duration="40000" />
       <workItem from="1642988073812" duration="1515000" />
       <workItem from="1642998210748" duration="953000" />
-      <workItem from="1643035997527" duration="358000" />
-    </task>
-    <task id="LOCAL-00025" summary="Fixed Perbaikan Antrian">
-      <created>1579690637508</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1579690637508</updated>
+      <workItem from="1643035997527" duration="569000" />
     </task>
     <task id="LOCAL-00026" summary="Fixed Perbaikan Antrian">
       <created>1579697945217</created>
@@ -630,7 +622,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643036047282</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Change Log :&#10;1. Perubahaan Method Post Ke Get">
+      <created>1643036656751</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1643036656751</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

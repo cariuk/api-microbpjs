@@ -13,8 +13,8 @@ class TokenController extends Controller{
     use  AuthenticatesUsers;
 
     function getLogin(Request $request){
-        $request->request->set("username",$request->header("username"));
-        $request->request->set("password",$request->header("password"));
+        $request->request->set("username",$request->header("x-username"));
+        $request->request->set("password",$request->header("x-password"));
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
