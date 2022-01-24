@@ -17,8 +17,8 @@ class PembatalanNomorController extends Controller{
             'kodebooking' => 'required',
             'keterangan' => 'required',
         ],[
-            "kodebooking.required" => "Kodebooking Harus Terisi",
-            "keterangan.required" => "Keterangan Harus Terisi",
+            "kodebooking.required" => "Kodebooking Tidak Boleh Kosong",
+            "keterangan.required" => "Keterangan Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()){

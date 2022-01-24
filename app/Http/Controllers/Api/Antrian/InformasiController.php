@@ -24,11 +24,11 @@ class InformasiController extends Controller{
             'tanggalperiksa' => 'required|date_format:Y-m-d',
             'jampraktek' => 'required',
         ],[
-            "kodepoli.required" => "Kode Poli Harus Terisi",
-            "kodedokter.required" => "Kode Dokter Harus Terisi",
-            "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
+            "kodepoli.required" => "Kode Poli Tidak Boleh Kosong",
+            "kodedokter.required" => "Kode Dokter Tidak Boleh Kosong",
+            "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
             "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai (Y-m-d)",
-            "jampraktek.required" => "Jam Peraktek Harus Terisi",
+            "jampraktek.required" => "Jam Peraktek Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()){
@@ -156,7 +156,7 @@ class InformasiController extends Controller{
             $request->all(), [
             'kodebooking' => 'required',
         ],[
-            "kodebooking.required" => "Kodebooking Harus Terisi",
+            "kodebooking.required" => "Kodebooking Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()){

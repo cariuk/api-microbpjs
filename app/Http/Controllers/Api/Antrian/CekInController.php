@@ -15,8 +15,8 @@ class CekInController extends Controller{
             'kodebooking' => 'required',
             'waktu' => 'required',
         ],[
-            "kodebooking.required" => "Kodebooking Harus Terisi",
-            "waktu.required" => "Waktu Cek In Harus Terisi",
+            "kodebooking.required" => "Kodebooking Tidak Boleh Kosong",
+            "waktu.required" => "Waktu Cek In Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()){

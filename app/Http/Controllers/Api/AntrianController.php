@@ -29,21 +29,21 @@ class AntrianController extends Controller
             'jenisreferensi' => 'required|in:1,2',
             'jenisrequest' => 'required|in:1,2'
         ],[
-            "nomorkartu.required" => "Nomor Kartu Peserta Harus Terisi",
+            "nomorkartu.required" => "Nomor Kartu Peserta Tidak Boleh Kosong",
             "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
             "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
-            "nik.required" => "Nomor Induk Kependudukan Harus Terisi",
+            "nik.required" => "Nomor Induk Kependudukan Tidak Boleh Kosong",
             "nik.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
             "nik.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
-            "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
+            "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
             "tanggalperiksa.date_format" => "Format Tanggal Periksa Harus Sesuai Format",
             "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal ".date("Y-m-d"),
             "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90".date("Y-m-d"),
-            "kodepoli.before" => "Kode Poli Harus Terisi",
-            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Harus Terisi",
-            "jenisreferensi.required" => "Jenis Referensi Harus Terisi",
+            "kodepoli.before" => "Kode Poli Tidak Boleh Kosong",
+            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Tidak Boleh Kosong",
+            "jenisreferensi.required" => "Jenis Referensi Tidak Boleh Kosong",
             "jenisreferensi.in" => "Jenis Referensi Hanya Boleh 1 = Nomor Rujukan | 2 = Nomor Kontrol ",
-            "jenisrequest.required" => "Jenis Request Harus Terisi",
+            "jenisrequest.required" => "Jenis Request Tidak Boleh Kosong",
             "jenisrequest.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
         ]);
 
@@ -188,9 +188,9 @@ class AntrianController extends Controller
             'tanggalperiksa' => 'required|date_format:Y-m-d|before:'.date("Y-m-d",strtotime("+8 day")),
             'kodepoli' => 'required',
         ],[
-            "tanggalperiksa.required" => 'Tanggal Periksa Harus Terisi',
+            "tanggalperiksa.required" => 'Tanggal Periksa Tidak Boleh Kosong',
             "tanggalperiksa.date_format" => 'Tanggal Periksa Harus Sesuai Dengan Format Y-m-d',
-            "kodepoli.required" => 'Kode Poli Harus Terisi',
+            "kodepoli.required" => 'Kode Poli Tidak Boleh Kosong',
         ]);
 
         if ($validator->fails()){

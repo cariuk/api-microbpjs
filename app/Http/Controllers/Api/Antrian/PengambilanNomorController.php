@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Antrian;
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineV2Model;
 use App\Model\MappingDPJPModel;
-use App\Model\MappingPoliAntrianModel;
 use App\Model\MappingPoliModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
 use App\ModelBridge\Pendaftaran\AntrianRuanganModel;
@@ -20,10 +19,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
 
-class PengambilanNomorController extends Controller
-{
-    function setData(Request $request)
-    {
+class PengambilanNomorController extends Controller{
+    function setData(Request $request){
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
@@ -36,23 +33,23 @@ class PengambilanNomorController extends Controller
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
             'nomorreferensi' => 'required', //"{norujukan/kontrol pasien JKN,diisi kosong jika NON JKN}"
         ], [
-            "nomorkartu.required" => "Nomor Kartu Peserta Harus Terisi",
+            "nomorkartu.required" => "Nomor Kartu Peserta Tidak Boleh Kosong",
             "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
             "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
-            "nik.required" => "Nomor Induk Kependudukan Harus Terisi",
+            "nik.required" => "Nomor Induk Kependudukan Tidak Boleh Kosong",
             "nik.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
             "nik.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
-            "nohp.required" => "Nomor HP Harus Terisi",
+            "nohp.required" => "Nomor HP Tidak Boleh Kosong",
             "nohp.max" => "Nomor Handphone Maximal 13 Digit",
-            "kodepoli.required" => "Kode Poli Harus Terisi",
-            "tanggalperiksa.required" => "Tanggal Periksa Harus Terisi",
+            "kodepoli.required" => "Kode Poli Tidak Boleh Kosong",
+            "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
             "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai, format yang benar adalah yyyy-mm-dd",
             "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal " . date("Y-m-d"),
             "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90" . date("Y-m-d"),
-            "kodedokter.required" => "Kode Dokter Harus Terisi",
-            "jeniskunjungan.required" => "Jenis Kunjungan Harus Terisi",
+            "kodedokter.required" => "Kode Dokter Tidak Boleh Kosong",
+            "jeniskunjungan.required" => "Jenis Kunjungan Tidak Boleh Kosong",
             "jeniskunjungan.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
-            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Harus Terisi",
+            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()) {
