@@ -19,9 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Perubahaan Method Post Ke Get">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/TokenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/TokenController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,14 +285,7 @@
       <workItem from="1642845388385" duration="40000" />
       <workItem from="1642988073812" duration="1515000" />
       <workItem from="1642998210748" duration="953000" />
-      <workItem from="1643035997527" duration="22000" />
-    </task>
-    <task id="LOCAL-00024" summary="Fixed Perbaikan Antrian">
-      <created>1579690377450</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1579690377450</updated>
+      <workItem from="1643035997527" duration="358000" />
     </task>
     <task id="LOCAL-00025" summary="Fixed Perbaikan Antrian">
       <created>1579690637508</created>
@@ -630,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642989615170</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Change Log :&#10;1. Perubahaan Method Post Ke Get">
+      <created>1643036047282</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1643036047282</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +652,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Order By Tanggal" />
     <MESSAGE value="Un Required Nomor RM" />
     <MESSAGE value="Perbaikan Penyesuaian" />
     <MESSAGE value="Pelepasan Mandatory" />
@@ -677,6 +676,7 @@
     <MESSAGE value="Change Log :&#10;Fixed Perbaikan Penyesuaian Dengan Document UAT" />
     <MESSAGE value="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse" />
     <MESSAGE value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
+    <MESSAGE value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
   </component>
 </project>
