@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::group(['namespace' => 'Api'], function() {
-    Route::middleware('throttle:60,1')->post("token", "TokenController@getLogin");
+    Route::middleware('throttle:60,1')->get("token", "TokenController@getLogin");
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'antrian','namespace' => 'Antrian'], function () {

@@ -19,15 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse">
-      <change afterPath="$PROJECT_DIR$/app/Model/RegPasienModel.php" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/CekInController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/CekInController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/AntrianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/AntrianController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,14 +283,9 @@
       <workItem from="1642387803833" duration="13103000" />
       <workItem from="1642829812732" duration="1205000" />
       <workItem from="1642845388385" duration="40000" />
-      <workItem from="1642988073812" duration="1222000" />
-    </task>
-    <task id="LOCAL-00023" summary="Perbaikan Model Bridge">
-      <created>1579688279200</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1579688279200</updated>
+      <workItem from="1642988073812" duration="1515000" />
+      <workItem from="1642998210748" duration="953000" />
+      <workItem from="1643035997527" duration="22000" />
     </task>
     <task id="LOCAL-00024" summary="Fixed Perbaikan Antrian">
       <created>1579690377450</created>
@@ -634,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642401420436</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda">
+      <created>1642989615170</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1642989615170</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -656,7 +652,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. Tanggal Periksa rulenya mau di perbaiki&#10;2. Poli Eksekutif dibuat Optional&#10;3. Filter Tanggal Untuk get jadwal operasi tdk di limit +7" />
     <MESSAGE value="Order By Tanggal" />
     <MESSAGE value="Un Required Nomor RM" />
     <MESSAGE value="Perbaikan Penyesuaian" />
@@ -681,6 +676,7 @@
     <MESSAGE value="Change Log :&#10;Perbaikan Informasi dan Pengambilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Fixed Perbaikan Penyesuaian Dengan Document UAT" />
     <MESSAGE value="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse" />
+    <MESSAGE value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
   </component>
 </project>
