@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Pasien;
 use App\Http\Controllers\Controller;
 use App\Model\RegPasienModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
+use App\ModelBridge\Master\PasienModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
@@ -83,11 +84,23 @@ class RegisterController extends Controller{
                     ]
                 ], 201);
             }
+            /*Input Di DB Master*/
+            $newPasien = new PasienModel();
+                $newPasien->NAMA = $request->nama;
+                $newPasien->JENIS_KELAMIN = $request->jeniskelamin=="L"?1:2;
+                $newPasien->TANGGAL_LAHIR = $request->tanggallahir;
+                $newPasien->ALAMAT = $request->alamat ;
+                $newPasien->RT = $request->rt ;
+                $newPasien->RW = $request->rw ;
+                $newPasien->KEWARGANEGARAAN = 71;
+                $newPasien->TANGGAL = now();
+                $newPasien->STATUS = 1;
+            $newPasien->save();
 
             /*Proses Input Pasien Baru*/
             $new = new RegPasienModel();
                 $new->NOMORKARTU = $request->nokartu;
-                $new->NORM = "";
+                $new->NORM = $newPasien->NORM;
                 $new->NIK = $request->nik;
                 $new->NOMORKK = $request->nomorkk;
                 $new->NAMA = $request->nama;
@@ -112,7 +125,7 @@ class RegisterController extends Controller{
                     "message" => "Harap datang ke admisi untuk melengkapi data rekam medis",
                 ],
                 "response" => [
-                    "norm" => rand(1000,9999)
+                    "norm" => $new->NORM
                 ]
             ]);
         }catch (Exception $exception) {
