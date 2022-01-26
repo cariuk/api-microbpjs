@@ -20,8 +20,8 @@ class RegisterController extends Controller{
             'nama' => 'required',
             'jeniskelamin' => 'required|in:L,P',
             'tanggallahir' => 'required|date_format:Y-m-d',
-            'nohp' => 'required|max:13',
             'alamat' => 'required',
+            'nohp' => 'required|max:13',
             'kodeprop' => 'required',
             'namaprop' => 'required',
             'kodedati2' => 'required',
@@ -30,8 +30,8 @@ class RegisterController extends Controller{
             'namakec' => 'required',
             'kodekel' => 'required',
             'namakel' => 'required',
-            'rw' => 'required',
             'rt' => 'required',
+            'rw' => 'required',
         ], [
             "nomorkartu.required" => "Nomor Kartu Peserta Tidak Boleh Kosong",
             "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
@@ -39,25 +39,26 @@ class RegisterController extends Controller{
             "nik.required" => "Nomor Induk Kependudukan Tidak Boleh Kosong",
             "nik.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
             "nik.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
-            "nomorkk.required" => "Nomor Induk Kependudukan Tidak Boleh Kosong",
-            "nomorkk.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
-            "nomorkk.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
+            "nomorkk.required" => "Nomor Kartu Keluarga Tidak Boleh Kosong",
+            "nomorkk.min" => "Nomor Kartu Keluarga Minimal 16 Digit",
+            "nomorkk.max" => "Nomor Kartu Keluarga Maximal 16 Digit",
             "nama.required" => "Nama Tidak Boleh Kosong",
             "jeniskelamin.required" => "Jenis Kelamin Tidak Boleh Kosong",
             "tanggallahir.required" => "Tanggal Lahir Tidak Boleh Kosong",
+            "tanggallahir.date_format" => "Format Tanggal Lahir Tidak Sesuai (Y-m-d)",
             "nohp.required" => "Nomor HP Tidak Boleh Kosong",
             "nohp.max" => "Nomor Handphone Maximal 13 Digit",
             "alamat.required" => "Alamat Tidak Boleh Kosong",
-            "kodeprop.required" => "Kode Profinsi Tidak Boleh Kosong",
-            "namaprop.required" => "Kode Profinsi Tidak Boleh Kosong",
+            "kodeprop.required" => "Kode Propinsi Tidak Boleh Kosong",
+            "namaprop.required" => "Nama Propinsi Tidak Boleh Kosong",
             "kodedati2.required" => "Kode Dati Tidak Boleh Kosong",
             "namadati2.required" => "Nama Dati Tidak Boleh Kosong",
             "kodekec.required" => "Kode Kecamatan Tidak Boleh Kosong",
             "namakec.required" => "Nama Kecamatan Tidak Boleh Kosong",
             "kodekel.required" => "Kode Keluarahan Tidak Boleh Kosong",
             "namakel.required" => "Nama Kelurahan Tidak Boleh Kosong",
-            "rw.required" => "RW Profinsi Tidak Boleh Kosong",
             "rt.required" => "RT Tidak Boleh Kosong",
+            "rw.required" => "RW Profinsi Tidak Boleh Kosong",
         ]);
 
         if ($validator->fails()) {
@@ -84,6 +85,7 @@ class RegisterController extends Controller{
                     ]
                 ], 201);
             }
+
             /*Input Di DB Master*/
             $newPasien = new PasienModel();
                 $newPasien->NAMA = $request->nama;
@@ -96,10 +98,16 @@ class RegisterController extends Controller{
                 $newPasien->TANGGAL = now();
                 $newPasien->STATUS = 1;
             $newPasien->save();
+            /*Input Nomor Kartu*/
+            $newKartuAsuransi = new PasienKartuAsuransiModel();
+                $newKartuAsuransi->JENIS = 2;
+                $newKartuAsuransi->NORM = $newPasien->NORM;
+                $newKartuAsuransi->NOMOR = $request->nomorkartu;
+            $newKartuAsuransi->save();
 
             /*Proses Input Pasien Baru*/
             $new = new RegPasienModel();
-                $new->NOMORKARTU = $request->nokartu;
+                $new->NOMORKARTU = $request->nomorkartu;
                 $new->NORM = $newPasien->NORM;
                 $new->NIK = $request->nik;
                 $new->NOMORKK = $request->nomorkk;
@@ -116,8 +124,8 @@ class RegisterController extends Controller{
                 $new->NAMA_KEC = $request->namakec;
                 $new->KODE_KEL = $request->kodekel;
                 $new->NAMA_KEL = $request->namakel;
-                $new->KODE_RW = $request->rw;
-                $new->NAMA_RT = $request->rt;
+                $new->RW = $request->rw;
+                $new->RT = $request->rt;
             $new->save();
             return response()->json([
                 "metadata" => [

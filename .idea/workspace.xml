@@ -19,9 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Perubahaan Method Post Ke Get">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Registrasi Pasien">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuAsuransiModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuAsuransiModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ModelBridge/Master/PasienModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienModel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,14 +288,8 @@
       <workItem from="1642988073812" duration="1515000" />
       <workItem from="1642998210748" duration="953000" />
       <workItem from="1643035997527" duration="1018000" />
-      <workItem from="1643084640005" duration="315000" />
-    </task>
-    <task id="LOCAL-00027" summary="Fixed Perbaikan Antrian">
-      <created>1579743693182</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1579743693182</updated>
+      <workItem from="1643084640005" duration="761000" />
+      <workItem from="1643158644115" duration="1446000" />
     </task>
     <task id="LOCAL-00028" summary="status =&gt; Code">
       <created>1579749147506</created>
@@ -631,7 +627,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643036705822</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Change Log :&#10;1. Registrasi Pasien">
+      <created>1643085003702</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1643085003702</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +656,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Un Required Nomor RM" />
     <MESSAGE value="Perbaikan Penyesuaian" />
     <MESSAGE value="Pelepasan Mandatory" />
     <MESSAGE value="Perbaikan" />
@@ -678,6 +680,7 @@
     <MESSAGE value="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse" />
     <MESSAGE value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
     <MESSAGE value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
+    <MESSAGE value="Change Log :&#10;1. Registrasi Pasien" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Registrasi Pasien" />
   </component>
 </project>
