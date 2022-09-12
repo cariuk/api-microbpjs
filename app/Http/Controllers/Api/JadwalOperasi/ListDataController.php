@@ -88,7 +88,7 @@ class ListDataController extends Controller{
             "bpm.DESKRIPSI as namapoli",
             DB::raw("IF(jadwal_operasi.STATUS=2,1,0) as terlaksana"),
             DB::raw("IF(pp.JENIS=2,master.getKartuAsuransiPasien(ppen.NORM,pp.JENIS),'') as nopeserta"),
-            DB::raw("ROUND((UNIX_TIMESTAMP(CURTIME(3))* 1000),0) as lastupdate")
+            DB::raw("CAST(ROUND((UNIX_TIMESTAMP(CURTIME(3))* 1000),0) AS UNSIGNED) as lastupdate")
         )->join("pendaftaran.pendaftaran as ppen","ppen.NOMOR","jadwal_operasi.NOPEN")
             ->leftJoin("pendaftaran.penjamin as pp",function ($join){
                 $join->on("pp.NOPEN","jadwal_operasi.NOPEN")->where(
