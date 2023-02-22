@@ -126,6 +126,8 @@ class RegisterController extends Controller{
                 $newKKartuKTP->NORM = $newPasien->NORM;
                 $newKKartuKTP->NOMOR = $request->ktp;
                 $newKKartuKTP->ALAMAT = $request->alamat;
+                $newKKartuKTP->RT = $request->rt;
+                $newKKartuKTP->RW = $request->rw;
                 $newKKartuKTP->save();
 
                 /*Proses Input Pasien Baru*/
