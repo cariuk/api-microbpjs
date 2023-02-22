@@ -19,11 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="Change Log :&#10;1. Registrasi Pasien">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="fix: change type data to UNSIGNED">
+      <change afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuIdentitasModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuAsuransiModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienKartuAsuransiModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ModelBridge/Master/PasienModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelBridge/Master/PasienModel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +56,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -203,24 +205,25 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="api&#9;FILE&#9;file:///Volumes/Macintosh Data/ProjectSites/microbpjs/routes/api.php&#10;app&#9;FILE&#9;file:///Volumes/Macintosh Data/ProjectSites/microbpjs/bootstrap/app.php&#10;AccessTokenController&#9;null&#9;null&#10;app.&#9;FILE&#9;file:///Volumes/Macintosh Data/ProjectSites/mirkobpjs/bootstrap/app.php" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "last_opened_file_path": "/Users/mopilie/PhpstormProjects/api-microbpjs/app/ModelBridge/Master",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/ModelBridge/Master" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Api/JadwalOperasi" />
       <recent name="$PROJECT_DIR$/app/ModelBridge" />
@@ -290,13 +293,10 @@
       <workItem from="1643035997527" duration="1018000" />
       <workItem from="1643084640005" duration="761000" />
       <workItem from="1643158644115" duration="1446000" />
-    </task>
-    <task id="LOCAL-00028" summary="status =&gt; Code">
-      <created>1579749147506</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1579749147506</updated>
+      <workItem from="1662954794043" duration="462000" />
+      <workItem from="1668492670271" duration="41000" />
+      <workItem from="1669969242157" duration="410000" />
+      <workItem from="1677039691569" duration="328000" />
     </task>
     <task id="LOCAL-00029" summary="Perbaikan">
       <created>1579749345274</created>
@@ -634,7 +634,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643085003702</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="fix: change type data to UNSIGNED">
+      <created>1662954929717</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1662954929717</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -650,13 +657,10 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Perbaikan Penyesuaian" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Pelepasan Mandatory" />
     <MESSAGE value="Perbaikan" />
     <MESSAGE value="Response Bahasa Indonesia" />
@@ -681,6 +685,7 @@
     <MESSAGE value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
     <MESSAGE value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
     <MESSAGE value="Change Log :&#10;1. Registrasi Pasien" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change Log :&#10;1. Registrasi Pasien" />
+    <MESSAGE value="fix: change type data to UNSIGNED" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: change type data to UNSIGNED" />
   </component>
 </project>

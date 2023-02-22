@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Pasien;
 use App\Http\Controllers\Controller;
 use App\Model\RegPasienModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
+use App\ModelBridge\Master\PasienKartuIdentitasModel;
 use App\ModelBridge\Master\PasienModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -86,8 +87,21 @@ class RegisterController extends Controller{
                 ], 201);
             }
 
-            /*Input Di DB Master*/
-            $newPasien = new PasienModel();
+            /*Cekc Nomor KTP*/
+            $checkNoKartuKTP = PasienKartuIdentitasModel::where([
+                "JENIS" => 2,
+                "NOMOR" => $request->nik
+            ])->first();
+
+            if ($checkNoKartu != null) {
+                $newKartuAsuransi = new PasienKartuAsuransiModel();
+                $newKartuAsuransi->JENIS = 2;
+                $newKartuAsuransi->NORM = $checkNoKartuKTP->NORM;
+                $newKartuAsuransi->NOMOR = $request->nomorkartu;
+                $newKartuAsuransi->save();
+            }else{
+                /*Input Di DB Master*/
+                $newPasien = new PasienModel();
                 $newPasien->NAMA = $request->nama;
                 $newPasien->JENIS_KELAMIN = $request->jeniskelamin=="L"?1:2;
                 $newPasien->TANGGAL_LAHIR = $request->tanggallahir;
@@ -97,16 +111,25 @@ class RegisterController extends Controller{
                 $newPasien->KEWARGANEGARAAN = 71;
                 $newPasien->TANGGAL = now();
                 $newPasien->STATUS = 1;
-            $newPasien->save();
-            /*Input Nomor Kartu*/
-            $newKartuAsuransi = new PasienKartuAsuransiModel();
+                $newPasien->save();
+
+                /*Input Nomor Kartu*/
+                $newKartuAsuransi = new PasienKartuAsuransiModel();
                 $newKartuAsuransi->JENIS = 2;
                 $newKartuAsuransi->NORM = $newPasien->NORM;
                 $newKartuAsuransi->NOMOR = $request->nomorkartu;
-            $newKartuAsuransi->save();
+                $newKartuAsuransi->save();
 
-            /*Proses Input Pasien Baru*/
-            $new = new RegPasienModel();
+                /*Input Nomor KTP*/
+                $newKKartuKTP = new PasienKartuIdentitasModel();
+                $newKKartuKTP->JENIS = 1;
+                $newKKartuKTP->NORM = $newPasien->NORM;
+                $newKKartuKTP->NOMOR = $request->ktp;
+                $newKKartuKTP->ALAMAT = $request->alamat;
+                $newKKartuKTP->save();
+
+                /*Proses Input Pasien Baru*/
+                $new = new RegPasienModel();
                 $new->NOMORKARTU = $request->nomorkartu;
                 $new->NORM = $newPasien->NORM;
                 $new->NIK = $request->nik;
@@ -126,7 +149,9 @@ class RegisterController extends Controller{
                 $new->NAMA_KEL = $request->namakel;
                 $new->RW = $request->rw;
                 $new->RT = $request->rt;
-            $new->save();
+                $new->save();
+            }
+
             return response()->json([
                 "metadata" => [
                     "code" => 200,
