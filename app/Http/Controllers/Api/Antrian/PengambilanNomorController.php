@@ -65,7 +65,7 @@ class PengambilanNomorController extends Controller{
         $tanggal = new TanggalMerah();
         $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
 
-        if (($tanggal->is_holiday()) || ($tanggal->is_sunday())) {
+        if (($tanggal->is_holiday())) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,
@@ -75,16 +75,16 @@ class PengambilanNomorController extends Controller{
         }
 
         /*Check Tanggal Pengambilan Antrian*/
-        if ($request->tanggal == date("Y-m-d", strtotime("+1 day"))) {
-            if (strtotime(date('Y-m-d') . " 18:00:00") < strtotime(date("Y-m-d H:i:s"))) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 201,
-                        "message" => "Maaf Pengambilan Nomor Antrian h+1"
-                    ]
-                ], 201);
-            }
-        }
+//        if ($request->tanggal == date("Y-m-d", strtotime("0 day"))) {
+//            if (strtotime(date('Y-m-d') . " 18:00:00") < strtotime(date("Y-m-d H:i:s"))) {
+//                return response()->json([
+//                    "metadata" => [
+//                        "code" => 201,
+//                        "message" => "Maaf Pengambilan Nomor Antrian h+1"
+//                    ]
+//                ], 201);
+//            }
+//        }
 
         /*Check Nomor Rekam Medik*/
         $checkPasien = PasienKartuAsuransiModel::where([
