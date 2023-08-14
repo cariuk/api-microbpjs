@@ -13,6 +13,7 @@ use App\ModelBridge\Pendaftaran\PendaftaranViaModel;
 use App\ModelBridge\Pendaftaran\PenjaminModel;
 use App\ModelBridge\Pendaftaran\TujuanModel;
 use App\ModelBridge\Poliklinik\JadwalPraktekModel;
+use Carbon\Carbon;
 use Grei\TanggalMerah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,7 @@ class PengambilanNomorController extends Controller{
             'nik' => 'required|min:16|max:16',
             'nohp' => 'required|max:13',
             'kodepoli' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:today|before:' . date("Y-m-d", strtotime("+90 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:'.date("Y-m-d", strtotime("-1 day")).'|before:' . date("Y-m-d", strtotime("+90 day")),
             'kodedokter' => 'required',
             'jampraktek' => 'required',
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
@@ -44,8 +45,8 @@ class PengambilanNomorController extends Controller{
             "kodepoli.required" => "Kode Poli Tidak Boleh Kosong",
             "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
             "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai, format yang benar adalah yyyy-mm-dd",
-            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90 Dari Tanggal " . date("Y-m-d"),
-            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H +1 Sampai H +90" . date("Y-m-d"),
+            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +90 Dari Tanggal " . date("Y-m-d"),
+            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +90" . date("Y-m-d"),
             "kodedokter.required" => "Kode Dokter Tidak Boleh Kosong",
             "jeniskunjungan.required" => "Jenis Kunjungan Tidak Boleh Kosong",
             "jeniskunjungan.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
@@ -65,7 +66,7 @@ class PengambilanNomorController extends Controller{
         $tanggal = new TanggalMerah();
         $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
 
-        if (($tanggal->is_holiday()) || ($tanggal->is_sunday())) {
+        if (($tanggal->is_holiday())) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,
@@ -74,23 +75,12 @@ class PengambilanNomorController extends Controller{
             ], 201);
         }
 
-        /*Check Tanggal Pengambilan Antrian*/
-        if ($request->tanggal == date("Y-m-d", strtotime("+1 day"))) {
-            if (strtotime(date('Y-m-d') . " 18:00:00") < strtotime(date("Y-m-d H:i:s"))) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 201,
-                        "message" => "Maaf Pengambilan Nomor Antrian h+1"
-                    ]
-                ], 201);
-            }
-        }
-
         /*Check Nomor Rekam Medik*/
         $checkPasien = PasienKartuAsuransiModel::where([
             "NOMOR" => $request->nomorkartu,
             "JENIS" => 2,
         ]);
+
         if (isset($request->norm)) {
             $validator = Validator::make(
                 $request->all(), [
@@ -129,8 +119,6 @@ class PengambilanNomorController extends Controller{
                     ]
                 ], 202);
             }
-
-
         }
         /*=======================================================================================*/
 
@@ -289,8 +277,9 @@ class PengambilanNomorController extends Controller{
 
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
-            $new->ESTIMASI_DILAYANI = strtotime("+".(5*$new->NOMOR_ANTRIAN)." minutes",strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI))*1000;
-                /*==========================================================*/
+            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI))
+                    ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000;
+            /*==========================================================*/
             $new->save();
 
             return response()->json([
