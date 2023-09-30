@@ -62,18 +62,18 @@ class PengambilanNomorController extends Controller{
             ], 201);
         }
 
-        /*Check Tanggal Merah*/
-        $tanggal = new TanggalMerah();
-        $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
-
-        if (($tanggal->is_holiday())) {
-            return response()->json([
-                "metadata" => [
-                    "code" => 201,
-                    "message" => "Pendaftaran ke Poli Ini Sedang Tutup, Karena Masuk Dalam Tanggal Merah Atau Hari Libur"
-                ]
-            ], 201);
-        }
+//        /*Check Tanggal Merah*/
+//        $tanggal = new TanggalMerah();
+//        $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
+//
+//        if (($tanggal->is_holiday())) {
+//            return response()->json([
+//                "metadata" => [
+//                    "code" => 201,
+//                    "message" => "Pendaftaran ke Poli Ini Sedang Tutup, Karena Masuk Dalam Tanggal Merah Atau Hari Libur"
+//                ]
+//            ], 201);
+//        }
 
         /*Check Nomor Rekam Medik*/
         $checkPasien = PasienKartuAsuransiModel::where([
@@ -163,7 +163,9 @@ class PengambilanNomorController extends Controller{
             "jadwal_praktek.HARI" => $haripraktek,
             "jadwal_praktek.DOKTER" => $mappingDokter->DOKTER,
             "jadwal_praktek.STATUS" => 1
-        ])->join("master.dokter_smf","dokter_smf.DOKTER","jadwal_praktek.DOKTER")->first();
+        ])->join("master.dokter_smf","dokter_smf.DOKTER","jadwal_praktek.DOKTER")
+        ->first();
+
 
         if ($checkJadwalPraktek==null){
             return response()->json([
