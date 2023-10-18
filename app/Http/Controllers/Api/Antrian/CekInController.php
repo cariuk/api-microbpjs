@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Antrian;
 
 use App\Http\Controllers\Controller;
 use App\Model\AntrianOnlineV2Model;
+use App\Model\AntrianUpdateWaktuModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
@@ -56,6 +57,23 @@ class CekInController extends Controller{
             ])->update([
                 "CEKIN" => $request->waktu
             ]);
+
+            /*Add Task Id 3*/
+            $checkAntrian = AntrianUpdateWaktuModel::where([
+                "ANTRIAN_ONLINE" => $request->kodebooking,
+                "TASK_ID" => 3
+            ])->first();
+
+            if ($checkAntrian == null) {
+                $newUpdate = new AntrianUpdateWaktuModel();
+                $newUpdate->ANTRIAN_ONLINE = $request->kodebooking;
+                $newUpdate->TASK_ID = 3;
+                $newUpdate->WAKTU = $request->waktu;
+                $newUpdate->RESPONSE = "{status:'OK'}";
+                $newUpdate->STATUS = 1;
+                $newUpdate->DATETIME = now();
+                $newUpdate->save();
+            }
 
             return response()->json([
                 "metadata" =>[
