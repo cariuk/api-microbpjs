@@ -216,10 +216,13 @@ class PengambilanNomorController extends Controller
             $new->TANGGAL_BUAT = now();
 
             /*Get Nomor Antrian SIMRS*/
-            if (strtotime(now()) >= strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI))
+            if (strtotime(now()) >= strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI)){
                 $tanggalPendaftaran = now();
-            else
+                $estimasi = Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))->addMinutes(5)->timestamp * 1000;
+            } else{
                 $tanggalPendaftaran = date("Y-m-d H:i:s", strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI));
+                $estimasi = null;
+            }
 
             //Pendaftaran Pasien
             $pendaftaran = new PendaftaranModel();
@@ -263,8 +266,8 @@ class PengambilanNomorController extends Controller
 
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
-            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))
-                    ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000;
+            $new->ESTIMASI_DILAYANI = $estimasi == null ? Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))
+                    ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000 : $estimasi;
             /*==========================================================*/
             $new->save();
 
