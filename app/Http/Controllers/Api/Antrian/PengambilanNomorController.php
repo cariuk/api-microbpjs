@@ -263,7 +263,7 @@ class PengambilanNomorController extends Controller
 
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
-            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI))
+            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))
                     ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000;
             /*==========================================================*/
             $new->save();
