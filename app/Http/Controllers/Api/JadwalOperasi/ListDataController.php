@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\JadwalOperasi;
 use App\Http\Controllers\Controller;
 use App\Model\HistoryRequestMicrobpjs;
 use App\ModelBridge\Pendaftaran\JadwalOperasiModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +94,7 @@ class ListDataController extends Controller
             ], 400);
         }
 
+        $tanggalAwal = Carbon::make($request->tanggalawal);
         $jadwalOperasi = JadwalOperasiModel::select(
             "jadwal_operasi.BOOKING as kodebooking",
             "jadwal_operasi.TANGGAL as tanggaloperasi",
