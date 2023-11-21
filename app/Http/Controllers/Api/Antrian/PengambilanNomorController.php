@@ -14,21 +14,22 @@ use App\ModelBridge\Pendaftaran\PenjaminModel;
 use App\ModelBridge\Pendaftaran\TujuanModel;
 use App\ModelBridge\Poliklinik\JadwalPraktekModel;
 use Carbon\Carbon;
-use Grei\TanggalMerah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
 
-class PengambilanNomorController extends Controller{
-    function setData(Request $request){
+class PengambilanNomorController extends Controller
+{
+    function setData(Request $request)
+    {
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
             'nik' => 'required|min:16|max:16',
             'nohp' => 'required|max:13',
             'kodepoli' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:'.date("Y-m-d", strtotime("-1 day")).'|before:' . date("Y-m-d", strtotime("+90 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . date("Y-m-d", strtotime("+90 day")),
             'kodedokter' => 'required',
             'jampraktek' => 'required',
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
@@ -61,19 +62,6 @@ class PengambilanNomorController extends Controller{
                 ]
             ], 201);
         }
-
-//        /*Check Tanggal Merah*/
-//        $tanggal = new TanggalMerah();
-//        $tanggal->set_date(str_replace("-", "", $request->tanggalperiksa));
-//
-//        if (($tanggal->is_holiday())) {
-//            return response()->json([
-//                "metadata" => [
-//                    "code" => 201,
-//                    "message" => "Pendaftaran ke Poli Ini Sedang Tutup, Karena Masuk Dalam Tanggal Merah Atau Hari Libur"
-//                ]
-//            ], 201);
-//        }
 
         /*Check Nomor Rekam Medik*/
         $checkPasien = PasienKartuAsuransiModel::where([
@@ -163,11 +151,11 @@ class PengambilanNomorController extends Controller{
             "jadwal_praktek.HARI" => $haripraktek,
             "jadwal_praktek.DOKTER" => $mappingDokter->DOKTER,
             "jadwal_praktek.STATUS" => 1
-        ])->join("master.dokter_smf","dokter_smf.DOKTER","jadwal_praktek.DOKTER")
-        ->first();
+        ])->join("master.dokter_smf", "dokter_smf.DOKTER", "jadwal_praktek.DOKTER")
+            ->first();
 
 
-        if ($checkJadwalPraktek==null){
+        if ($checkJadwalPraktek == null) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,
@@ -177,13 +165,13 @@ class PengambilanNomorController extends Controller{
         }
 
         $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
-        ->where([
-            "dokter" => $checkJadwalPraktek->DOKTER,
-            "ruangan" => $checkJadwalPraktek->RUANGAN,
-            "shift" => $checkJadwalPraktek->SHIFT
-        ])->count();
+            ->where([
+                "dokter" => $checkJadwalPraktek->DOKTER,
+                "ruangan" => $checkJadwalPraktek->RUANGAN,
+                "shift" => $checkJadwalPraktek->SHIFT
+            ])->count();
 
-        if ($terdaftar >= ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)){
+        if ($terdaftar >= ($checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE)) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,
@@ -228,58 +216,54 @@ class PengambilanNomorController extends Controller{
             $new->TANGGAL_BUAT = now();
 
             /*Get Nomor Antrian SIMRS*/
-            try{
-                //Pendaftaran Pasien
-                $pendaftaran = new PendaftaranModel();
-                $pendaftaran->NOMOR = PendaftaranModel::generateNOMOR(date("Y-m-d", strtotime($request->tanggalperiksa)));
-                $pendaftaran->NORM = $checkPasien->NORM;
-                $pendaftaran->TANGGAL = date("Y-m-d H:i:s", strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI));
-                $pendaftaran->DIAGNOSA_MASUK = "Z00.0";
-                $pendaftaran->OLEH = 1;
-                $pendaftaran->STATUS = 1;
-                $pendaftaran->save();
+            if (strtotime(now()) >= strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI))
+                $tanggalPendaftaran = now();
+            else
+                $tanggalPendaftaran = date("Y-m-d H:i:s", strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI));
 
-                //Pendaftaran Via
-                $viapendaftaran = new PendaftaranViaModel();
-                $viapendaftaran->NOPEN = $pendaftaran->NOMOR;
-                $viapendaftaran->JENIS = 4;
-                $viapendaftaran->save();
+            //Pendaftaran Pasien
+            $pendaftaran = new PendaftaranModel();
+            $pendaftaran->NOMOR = PendaftaranModel::generateNOMOR(date("Y-m-d", strtotime($request->tanggalperiksa)));
+            $pendaftaran->NORM = $checkPasien->NORM;
+            $pendaftaran->TANGGAL = $tanggalPendaftaran;
+            $pendaftaran->DIAGNOSA_MASUK = "Z00.0";
+            $pendaftaran->OLEH = 1;
+            $pendaftaran->STATUS = 1;
+            $pendaftaran->save();
 
-                //Tujuan Pendaftaran
-                $tujuan = new TujuanModel();
-                $tujuan->NOPEN = $pendaftaran->NOMOR;
-                $tujuan->RUANGAN =  $checkJadwalPraktek->RUANGAN;
-                $tujuan->SMF = $mappingPoli->SMF;
-                $tujuan->SHIFT = $checkJadwalPraktek->SHIFT;
-                $tujuan->DOKTER = $mappingDokter->DOKTER;
-                $tujuan->save();
+            //Pendaftaran Via
+            $viapendaftaran = new PendaftaranViaModel();
+            $viapendaftaran->NOPEN = $pendaftaran->NOMOR;
+            $viapendaftaran->JENIS = 4;
+            $viapendaftaran->save();
 
-                //Penjamin Pendaftaran
-                $penjamin = new PenjaminModel();
-                    $penjamin->NOPEN = $pendaftaran->NOMOR;
-                    $penjamin->JENIS = 2;
-                    $penjamin->NOMOR = "";
-                    $penjamin->KELAS = 0;
-                $penjamin->save();
+            //Tujuan Pendaftaran
+            $tujuan = new TujuanModel();
+            $tujuan->NOPEN = $pendaftaran->NOMOR;
+            $tujuan->RUANGAN = $checkJadwalPraktek->RUANGAN;
+            $tujuan->SMF = $mappingPoli->SMF;
+            $tujuan->SHIFT = $checkJadwalPraktek->SHIFT;
+            $tujuan->DOKTER = $mappingDokter->DOKTER;
+            $tujuan->save();
 
-                $antrian = AntrianRuanganModel::select(
-                    "TANGGAL",
-                    "NOMORDOKTER as NOMOR"
-                )->where([
-                    "REF" => $pendaftaran->NOMOR
-                ])->first();
-            }catch (Exception $exception) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 500,
-                        "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
-                    ],"response" => $exception->getMessage()
-                ], 500);
-            }
+            //Penjamin Pendaftaran
+            $penjamin = new PenjaminModel();
+            $penjamin->NOPEN = $pendaftaran->NOMOR;
+            $penjamin->JENIS = 2;
+            $penjamin->NOMOR = "";
+            $penjamin->KELAS = 0;
+            $penjamin->save();
+
+            $antrian = AntrianRuanganModel::select(
+                "TANGGAL",
+                "NOMORDOKTER as NOMOR"
+            )->where([
+                "REF" => $pendaftaran->NOMOR
+            ])->first();
 
             $new->NOPEN = $pendaftaran->NOMOR;
             $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
-            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($request->tanggalperiksa." ".$checkJadwalPraktek->WAKTU_MULAI))
+            $new->ESTIMASI_DILAYANI = Carbon::createFromTimestamp(strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI))
                     ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000;
             /*==========================================================*/
             $new->save();
@@ -290,15 +274,15 @@ class PengambilanNomorController extends Controller{
                     "message" => "Ok"
                 ],
                 "response" => [
-                    "nomorantrean" => $new->KODE_POLI." ".$new->NOMOR_ANTRIAN,
+                    "nomorantrean" => $new->KODE_POLI . " " . $new->NOMOR_ANTRIAN,
                     "angkaantrean" => $new->NOMOR_ANTRIAN,
-                    "kodebooking" =>  $new->ID,
+                    "kodebooking" => $new->ID,
                     "norm" => $new->NOMOR_RM, /*Nomor RM*/
-                    "namapoli" => $mappingPoli->KODE." - ".$mappingPoli->DESKRIPSI, /*Nama Poli*/
+                    "namapoli" => $mappingPoli->KODE . " - " . $mappingPoli->DESKRIPSI, /*Nama Poli*/
                     "namadokter" => $mappingDokter->NAMA,
                     "estimasidilayani" => $new->ESTIMASI_DILAYANI, /*Waktu Pelayanan*/
-                    "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE)-$terdaftar,
-                    "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE+$checkJadwalPraktek->ONLINE,
+                    "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE) - $terdaftar,
+                    "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE,
                     "sisakuotanonjkn" => 0,
                     "kuotanonjkn" => 0,
                     "keterangan" => "Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal."
@@ -309,7 +293,7 @@ class PengambilanNomorController extends Controller{
                 "metadata" => [
                     "code" => 500,
                     "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
-                ],"response" => $exception->getMessage()
+                ], "response" => $exception->getMessage()
             ], 500);
         }
     }

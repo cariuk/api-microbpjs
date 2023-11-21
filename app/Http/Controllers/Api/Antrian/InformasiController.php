@@ -78,6 +78,7 @@ class InformasiController extends Controller{
             )->where([
                 "KODE" => $request->kodedokter
             ])->first();
+
             if ($mappingDokter == null) {
                 return response()->json([
                     "metadata" => [
@@ -221,7 +222,7 @@ class InformasiController extends Controller{
 
             $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
                 ->where([
-                    "dokter" => $checkJadwalPraktek->DOKTER,
+                    "dokter" => $mappingDokter->DOKTER,
                     "ruangan" => $checkJadwalPraktek->RUANGAN,
                     "shift" => $checkJadwalPraktek->SHIFT
                 ])->count();
