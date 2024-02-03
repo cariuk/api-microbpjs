@@ -87,13 +87,13 @@ class RegisterController extends Controller{
                 ], 201);
             }
 
-            /*Cekc Nomor KTP*/
+            /*Cek Nomor KTP*/
             $checkNoKartuKTP = PasienKartuIdentitasModel::where([
                 "JENIS" => 2,
                 "NOMOR" => $request->nik
             ])->first();
 
-            if ($checkNoKartu != null) {
+            if ($checkNoKartuKTP != null) {
                 $newKartuAsuransi = new PasienKartuAsuransiModel();
                 $newKartuAsuransi->JENIS = 2;
                 $newKartuAsuransi->NORM = $checkNoKartuKTP->NORM;

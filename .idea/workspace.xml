@@ -22,10 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: perbaikan error">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: update estimasi layanan">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/JadwalOperasi/ListDataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/JadwalOperasi/ListDataController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +51,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="feat/remove_check_h_1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,7 +67,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/local/Cellar/php/8.2.9/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
@@ -224,7 +223,7 @@
     &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
     &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
     &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/remove__check__h__1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/mopilie/PhpstormProjects/api-microbpjs&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -327,7 +326,8 @@
       <workItem from="1699234204030" duration="1088000" />
       <workItem from="1699510620544" duration="1640000" />
       <workItem from="1700037545192" duration="1274000" />
-      <workItem from="1700538019049" duration="734000" />
+      <workItem from="1700538019049" duration="3800000" />
+      <workItem from="1700712737750" duration="209000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -672,7 +672,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -692,8 +692,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Perbaika Unrequired Nomor Tlp" />
-    <MESSAGE value="Change Log : &#10;Restrukturisasi Api Antrian Untuk Versi 2" />
     <MESSAGE value="Change Log : &#10;Perbaikan File dan Penghapusan File Yang Tidak Digunakan" />
     <MESSAGE value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
     <MESSAGE value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
@@ -717,6 +715,8 @@
     <MESSAGE value="feat: update history request micro bpjs" />
     <MESSAGE value="feat: update antrian task id 3 if cek in" />
     <MESSAGE value="feat: perbaikan error" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: perbaikan error" />
+    <MESSAGE value="feat: pendaftaran hari h sesuai dengan tanggal dan waktu pendaftarannya" />
+    <MESSAGE value="feat: update estimasi layanan" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update estimasi layanan" />
   </component>
 </project>
