@@ -75,6 +75,10 @@ class PembatalanNomorController extends Controller{
                 "WAKTU_PEMBATALAN" => now()
             ]);
 
+            PendaftaranModel::where("NOMOR",$checkAntrian->NOPEN)->update([
+                "STATUS" => 0
+            ]);
+
             return response()->json([
                 "metadata" =>[
                     "code" => 200,

@@ -22,9 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: update estimasi layanan">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: update cek nomor ktp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PembatalanNomorController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,6 +205,10 @@
       <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
     </include_path>
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="1rkZLLAN9D43WtPeBJHlQJ06RQi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -244,6 +248,13 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lumen" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15026.12" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -328,6 +339,8 @@
       <workItem from="1700037545192" duration="1274000" />
       <workItem from="1700538019049" duration="3800000" />
       <workItem from="1700712737750" duration="209000" />
+      <workItem from="1706930961814" duration="1390000" />
+      <workItem from="1720184158237" duration="84000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -672,7 +685,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -692,7 +705,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Change Log : &#10;Perbaikan File dan Penghapusan File Yang Tidak Digunakan" />
     <MESSAGE value="Change Log : &#10;Penambahaan Informasi Pasien dan Kartu Asuransi" />
     <MESSAGE value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
     <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
@@ -717,6 +729,7 @@
     <MESSAGE value="feat: perbaikan error" />
     <MESSAGE value="feat: pendaftaran hari h sesuai dengan tanggal dan waktu pendaftarannya" />
     <MESSAGE value="feat: update estimasi layanan" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update estimasi layanan" />
+    <MESSAGE value="feat: update cek nomor ktp" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update cek nomor ktp" />
   </component>
 </project>
