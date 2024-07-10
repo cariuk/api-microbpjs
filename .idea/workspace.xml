@@ -22,11 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: pembatalan kunjungan">
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: change wrong number type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,7 +341,7 @@
       <workItem from="1700712737750" duration="209000" />
       <workItem from="1706930961814" duration="1390000" />
       <workItem from="1720184158237" duration="726000" />
-      <workItem from="1720577266659" duration="946000" />
+      <workItem from="1720577266659" duration="1515000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -688,7 +686,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -708,7 +706,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Change Log : &#10;- Format Sementara Pengambilan Nomor Antrian&#10;- Penambahaan Database Untuk Jadwal Praktek" />
     <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
     <MESSAGE value="Change Log : &#10;Penambahaan Field Pengambilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
@@ -733,6 +730,7 @@
     <MESSAGE value="feat: update estimasi layanan" />
     <MESSAGE value="feat: update cek nomor ktp" />
     <MESSAGE value="feat: pembatalan kunjungan" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: pembatalan kunjungan" />
+    <MESSAGE value="feat: change wrong number type" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: change wrong number type" />
   </component>
 </project>

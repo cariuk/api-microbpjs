@@ -171,7 +171,7 @@ class PengambilanNomorController extends Controller
                 "shift" => $checkJadwalPraktek->SHIFT
             ])->count();
 
-        if ($terdaftar >= ($checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE)) {
+        if ($terdaftar >= $checkJadwalPraktek->ONLINE) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,
