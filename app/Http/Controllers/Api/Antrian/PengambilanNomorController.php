@@ -171,14 +171,14 @@ class PengambilanNomorController extends Controller
                 "shift" => $checkJadwalPraktek->SHIFT
             ])->count();
 
-        if ($terdaftar >= $checkJadwalPraktek->ONLINE) {
-            return response()->json([
-                "metadata" => [
-                    "code" => 201,
-                    "message" => "Kuota Jadwal Dokter Tersebut Telah Penuh, Silahkan Reschedule Tanggal dan Jam Praktek Lainnya"
-                ]
-            ], 201);
-        }
+//        if ($terdaftar >= $checkJadwalPraktek->ONLINE) {
+//            return response()->json([
+//                "metadata" => [
+//                    "code" => 201,
+//                    "message" => "Kuota Jadwal Dokter Tersebut Telah Penuh, Silahkan Reschedule Tanggal dan Jam Praktek Lainnya"
+//                ]
+//            ], 201);
+//        }
         /*=======================================================================================*/
 
         /*Check Data Antrian*/
