@@ -171,7 +171,7 @@ class PengambilanNomorController extends Controller
                 "shift" => $checkJadwalPraktek->SHIFT
             ])->join("pendaftaran.penjamin",function ($join){
                 $join->on("antrian_ruangan.REF","penjamin.NOPEN");
-                $join->where("JENIS",2);
+                $join->where("penjamin.JENIS",2);
             })->count();
 
         if ($terdaftar >= $checkJadwalPraktek->ONLINE) {
