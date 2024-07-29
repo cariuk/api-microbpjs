@@ -22,7 +22,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: change wrong number type">
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: remova kuota">
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/blobs/version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/PengambilanNomorController.php" afterDir="false" />
     </list>
@@ -341,7 +344,8 @@
       <workItem from="1700712737750" duration="209000" />
       <workItem from="1706930961814" duration="1390000" />
       <workItem from="1720184158237" duration="726000" />
-      <workItem from="1720577266659" duration="1515000" />
+      <workItem from="1720577266659" duration="2000000" />
+      <workItem from="1722212454276" duration="122000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -686,7 +690,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -706,8 +710,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Change Log : &#10;Fixed Pendaftaran Antrian Poli Klinik" />
-    <MESSAGE value="Change Log : &#10;Penambahaan Field Pengambilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Fixed Pembatalan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Fixed Informasi Status Antrian dan Pengamilan Nomor Antrian" />
     <MESSAGE value="Change Log :&#10;Perbaika Informasi Alert Pengambilan Nomor Antrian" />
@@ -731,6 +733,8 @@
     <MESSAGE value="feat: update cek nomor ktp" />
     <MESSAGE value="feat: pembatalan kunjungan" />
     <MESSAGE value="feat: change wrong number type" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: change wrong number type" />
+    <MESSAGE value="feat: remove validation quota onsite" />
+    <MESSAGE value="feat: remova kuota" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: remova kuota" />
   </component>
 </project>
