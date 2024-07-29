@@ -174,7 +174,7 @@ class PengambilanNomorController extends Controller
                 $join->where("penjamin.JENIS",2);
             })->count();
 
-        if ($terdaftar >= $checkJadwalPraktek->ONLINE) {
+        if ($terdaftar >= $checkJadwalPraktek->KUOTA_ONLINE) {
             return response()->json([
                 "metadata" => [
                     "code" => 201,

@@ -340,6 +340,7 @@
       <workItem from="1720184158237" duration="726000" />
       <workItem from="1720577266659" duration="2000000" />
       <workItem from="1722212454276" duration="258000" />
+      <workItem from="1722216060009" duration="182000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -684,7 +685,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
