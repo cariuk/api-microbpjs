@@ -59,12 +59,22 @@ class CekInController extends Controller{
             ]);
 
             /*Add Task Id 3*/
-            $checkAntrian = AntrianUpdateWaktuModel::where([
-                "ANTRIAN_ONLINE" => $request->kodebooking,
-                "TASK_ID" => 3
-            ])->first();
+//            $checkAntrian = AntrianUpdateWaktuModel::where([
+//                "ANTRIAN_ONLINE" => $request->kodebooking,
+//                "TASK_ID" => 3
+//            ])->first();
 
-            if ($checkAntrian == null) {
+//            if ($checkAntrian == null) {
+//                $newUpdate = new AntrianUpdateWaktuModel();
+//                $newUpdate->ANTRIAN_ONLINE = $request->kodebooking;
+//                $newUpdate->TASK_ID = 3;
+//                $newUpdate->WAKTU = $request->waktu;
+//                $newUpdate->RESPONSE = "{status:'OK'}";
+//                $newUpdate->STATUS = 1;
+//                $newUpdate->DATETIME = now();
+//                $newUpdate->save();
+//            }
+            try{
                 $newUpdate = new AntrianUpdateWaktuModel();
                 $newUpdate->ANTRIAN_ONLINE = $request->kodebooking;
                 $newUpdate->TASK_ID = 3;
@@ -73,7 +83,7 @@ class CekInController extends Controller{
                 $newUpdate->STATUS = 1;
                 $newUpdate->DATETIME = now();
                 $newUpdate->save();
-            }
+            }catch (Exception $exception){}
 
             return response()->json([
                 "metadata" =>[
