@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
 
-class RegisterController extends Controller{
-    function setData(Request $request){
+class RegisterController extends Controller
+{
+    function setData(Request $request)
+    {
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
@@ -78,11 +80,11 @@ class RegisterController extends Controller{
                 "NOMOR" => $request->nomorkartu
             ])->first();
 
-            if ($checkNoKartu != null){
+            if ($checkNoKartu != null) {
                 return response()->json([
                     "metadata" => [
                         "code" => 201,
-                        "message" => "Nomor Kartu Telah Terdaftar Dengan Nomor RM ".$checkNoKartu->NORM
+                        "message" => "Nomor Kartu Telah Terdaftar Dengan Nomor RM " . $checkNoKartu->NORM
                     ]
                 ], 201);
             }
@@ -99,15 +101,25 @@ class RegisterController extends Controller{
                 $newKartuAsuransi->NORM = $checkNoKartuKTP->NORM;
                 $newKartuAsuransi->NOMOR = $request->nomorkartu;
                 $newKartuAsuransi->save();
-            }else{
+
+                return response()->json([
+                    "metadata" => [
+                        "code" => 200,
+                        "message" => "Harap datang ke admisi untuk melengkapi data rekam medis",
+                    ],
+                    "response" => [
+                        "norm" => $checkNoKartuKTP->NORM
+                    ]
+                ]);
+            } else {
                 /*Input Di DB Master*/
                 $newPasien = new PasienModel();
                 $newPasien->NAMA = $request->nama;
-                $newPasien->JENIS_KELAMIN = $request->jeniskelamin=="L"?1:2;
+                $newPasien->JENIS_KELAMIN = $request->jeniskelamin == "L" ? 1 : 2;
                 $newPasien->TANGGAL_LAHIR = $request->tanggallahir;
-                $newPasien->ALAMAT = $request->alamat ;
-                $newPasien->RT = $request->rt ;
-                $newPasien->RW = $request->rw ;
+                $newPasien->ALAMAT = $request->alamat;
+                $newPasien->RT = $request->rt;
+                $newPasien->RW = $request->rw;
                 $newPasien->KEWARGANEGARAAN = 71;
                 $newPasien->TANGGAL = now();
                 $newPasien->STATUS = 1;
@@ -163,13 +175,13 @@ class RegisterController extends Controller{
                     "norm" => $new->NORM
                 ]
             ]);
-        }catch (Exception $exception) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 500,
-                        "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
-                    ],"response" => $exception->getMessage()
-                ], 500);
-            }
+        } catch (Exception $exception) {
+            return response()->json([
+                "metadata" => [
+                    "code" => 500,
+                    "message" => "Maaf, Terjadi Kesalahan Pada Sistem. Harap Coba Beberapa Saat Lagi"
+                ], "response" => $exception->getMessage()
+            ], 500);
+        }
     }
 }
