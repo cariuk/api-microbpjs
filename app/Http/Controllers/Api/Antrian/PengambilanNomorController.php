@@ -169,9 +169,9 @@ class PengambilanNomorController extends Controller
                 "dokter" => $checkJadwalPraktek->DOKTER,
                 "ruangan" => $checkJadwalPraktek->RUANGAN,
                 "shift" => $checkJadwalPraktek->SHIFT
-            ])->join("pendaftaran.penjamin",function ($join){
-                $join->on("antrian_ruangan.REF","penjamin.NOPEN");
-                $join->where("penjamin.JENIS",2);
+            ])->join("pendaftaran.penjamin", function ($join) {
+                $join->on("antrian_ruangan.REF", "penjamin.NOPEN");
+                $join->where("penjamin.JENIS", 2);
             })->count();
 
         if ($terdaftar >= $checkJadwalPraktek->KUOTA_ONLINE) {
@@ -192,6 +192,8 @@ class PengambilanNomorController extends Controller
             "STATUS" => 1
         ])->first();
         /*=======================================================================================*/
+
+        DB::beginTransaction();
         try {
             if ($checkAntrian != null) {
                 return response()->json([
@@ -219,10 +221,10 @@ class PengambilanNomorController extends Controller
             $new->TANGGAL_BUAT = now();
 
             /*Get Nomor Antrian SIMRS*/
-            if (strtotime(now()) >= strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI)){
+            if (strtotime(now()) >= strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI)) {
                 $tanggalPendaftaran = now();
                 $estimasi = Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))->addMinutes(5)->timestamp * 1000;
-            } else{
+            } else {
                 $tanggalPendaftaran = date("Y-m-d H:i:s", strtotime($request->tanggalperiksa . " " . $checkJadwalPraktek->WAKTU_MULAI));
                 $estimasi = null;
             }
@@ -274,6 +276,7 @@ class PengambilanNomorController extends Controller
             /*==========================================================*/
             $new->save();
 
+            DB::commit();
             return response()->json([
                 "metadata" => [
                     "code" => 200,
@@ -295,6 +298,7 @@ class PengambilanNomorController extends Controller
                 ]
             ]);
         } catch (Exception $exception) {
+            DB::rollBack();
             return response()->json([
                 "metadata" => [
                     "code" => 500,
