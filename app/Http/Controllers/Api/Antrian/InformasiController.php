@@ -218,7 +218,7 @@ class InformasiController extends Controller
                 "BPJS" => 1,
                 "HARI" => $haripraktek,
                 "DOKTER" => $mappingDokter->DOKTER,
-            ])->first();
+            ])->orderBy("ID","DESC")->first();
 
             if ($checkJadwalPraktek == null) {
                 return response()->json([
