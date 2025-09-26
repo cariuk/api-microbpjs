@@ -218,7 +218,6 @@ class InformasiController extends Controller
                 "BPJS" => 1,
                 "HARI" => $haripraktek,
                 "DOKTER" => $mappingDokter->DOKTER,
-                "STATUS" => 1
             ])->first();
 
             if ($checkJadwalPraktek == null) {
