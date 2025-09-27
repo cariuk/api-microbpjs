@@ -92,8 +92,8 @@ class InformasiController extends Controller
                 "BPJS" => 1,
                 "HARI" => $haripraktek,
                 "DOKTER" => $mappingDokter->DOKTER,
-                "STATUS" => 1
-            ])->first();
+            ])->orderBy('ID','DESC')->first();
+
 
             $terdaftar = AntrianRuanganModel::where("tanggal", $request->tanggalperiksa)
                 ->where([
@@ -218,7 +218,7 @@ class InformasiController extends Controller
                 "BPJS" => 1,
                 "HARI" => $haripraktek,
                 "DOKTER" => $mappingDokter->DOKTER,
-            ])->orderBy("ID","DESC")->first();
+            ])->orderBy("ID", "DESC")->first();
 
             if ($checkJadwalPraktek == null) {
                 return response()->json([
