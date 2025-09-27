@@ -136,7 +136,7 @@ class RegisterController extends Controller
                 $newKKartuKTP = new PasienKartuIdentitasModel();
                 $newKKartuKTP->JENIS = 1;
                 $newKKartuKTP->NORM = $newPasien->NORM;
-                $newKKartuKTP->NOMOR = $request->ktp;
+                $newKKartuKTP->NOMOR = $request->nik;
                 $newKKartuKTP->ALAMAT = $request->alamat;
                 $newKKartuKTP->RT = $request->rt;
                 $newKKartuKTP->RW = $request->rw;

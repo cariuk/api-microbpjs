@@ -22,9 +22,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: update InformasiController to order results by ID in descending order">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Antrian/InformasiController.php" afterDir="false" />
+    <list default="true" id="d1cb8239-45b3-486d-a61f-ed968c66d563" name="Default Changelist" comment="feat: update InformasiController to consistently order results by ID in descending order">
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Pasien/RegisterController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,7 +363,7 @@
       <workItem from="1752027466985" duration="4000" />
       <workItem from="1758580650833" duration="678000" />
       <workItem from="1758862307462" duration="1160000" />
-      <workItem from="1758960306006" duration="129000" />
+      <workItem from="1758960306006" duration="267000" />
     </task>
     <task id="LOCAL-00032" summary="Perbaikan Response Jadwal Operasi">
       <created>1579823108614</created>
@@ -709,7 +708,7 @@
       <option name="project" value="LOCAL" />
       <updated>1687844809438</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,7 +728,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Change Log :&#10;Fixed Perbaikan Penyesuaian Dengan Document UAT" />
     <MESSAGE value="Change Log :&#10;Perbaikan Penambahaan Proxy Reverse" />
     <MESSAGE value="Change Log :&#10;1. Antrian Cek In&#10;2. Perbaikan Informasi Antrian&#10;3. Proses Pembatalan Nomor Antrian&#10;4. Perbaikan Pengambilan Nomor Antrian&#10;5. Registrasi Pasien Baru Jika Peserta Bpjs Baru Pertama Kali Ke Ananda" />
     <MESSAGE value="Change Log :&#10;1. Perubahaan Method Post Ke Get" />
@@ -754,6 +752,7 @@
     <MESSAGE value="feat: improve database transaction handling and exclude additional folders" />
     <MESSAGE value="feat: refactor InformasiController for improved readability and error handling" />
     <MESSAGE value="feat: update InformasiController to order results by ID in descending order" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update InformasiController to order results by ID in descending order" />
+    <MESSAGE value="feat: update InformasiController to consistently order results by ID in descending order" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update InformasiController to consistently order results by ID in descending order" />
   </component>
 </project>
