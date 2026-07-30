@@ -7,6 +7,7 @@ use App\Model\AntrianOnlineV2Model;
 use App\Model\MappingDPJPModel;
 use App\Model\MappingPoliModel;
 use App\ModelBridge\Master\PasienKartuAsuransiModel;
+use App\ModelBridge\Master\PasienKartuIdentitasModel;
 use App\ModelBridge\Pendaftaran\AntrianRuanganModel;
 use App\ModelBridge\Pendaftaran\PendaftaranModel;
 use App\ModelBridge\Pendaftaran\PendaftaranViaModel;
@@ -17,14 +18,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use PHPUnit\Exception;
+use Exception;
 
 class PengambilanNomorController extends Controller
 {
     function setData(Request $request)
     {
-        // Get max booking days from environment variable (default: 90 days)
-        $maxBookingDays = env('MAX_BOOKING_DAYS_AHEAD', 90);
+        // Get max booking days from config
+        $maxBookingDays = config('antrian.max_booking_days_ahead', 90);
+        $maxDate = date("Y-m-d", strtotime("+$maxBookingDays day"));
 
         $validator = Validator::make(
             $request->all(), [
@@ -32,29 +34,29 @@ class PengambilanNomorController extends Controller
             'nik' => 'required|min:16|max:16',
             'nohp' => 'required|max:13',
             'kodepoli' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . date("Y-m-d", strtotime("+{$maxBookingDays} day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . $maxDate,
             'kodedokter' => 'required',
             'jampraktek' => 'required',
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
             'nomorreferensi' => 'required', //"{norujukan/kontrol pasien JKN,diisi kosong jika NON JKN}"
         ], [
-            "nomorkartu.required" => "Nomor Kartu Peserta Tidak Boleh Kosong",
-            "nomorkartu.min" => "Nomor Kartu Minimal 13 Digit",
-            "nomorkartu.max" => "Nomor Kartu Maximal 13 Digit",
-            "nik.required" => "Nomor Induk Kependudukan Tidak Boleh Kosong",
-            "nik.min" => "Nomor Induk Kependudukan Minimal 16 Digit",
-            "nik.max" => "Nomor Induk Kependudukan Maximal 16 Digit",
-            "nohp.required" => "Nomor HP Tidak Boleh Kosong",
-            "nohp.max" => "Nomor Handphone Maximal 13 Digit",
-            "kodepoli.required" => "Kode Poli Tidak Boleh Kosong",
-            "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
-            "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai, format yang benar adalah yyyy-mm-dd",
-            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +{$maxBookingDays} Dari Tanggal " . date("Y-m-d"),
-            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +{$maxBookingDays} Dari Tanggal " . date("Y-m-d"),
-            "kodedokter.required" => "Kode Dokter Tidak Boleh Kosong",
-            "jeniskunjungan.required" => "Jenis Kunjungan Tidak Boleh Kosong",
-            "jeniskunjungan.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
-            "nomorreferensi.required" => "Nomor Referensi / Nomor Rujukan Tidak Boleh Kosong",
+            "nomorkartu.required" => "Nomor Kartu Peserta tidak boleh kosong",
+            "nomorkartu.min" => "Nomor Kartu harus 13 digit",
+            "nomorkartu.max" => "Nomor Kartu harus 13 digit",
+            "nik.required" => "NIK tidak boleh kosong",
+            "nik.min" => "NIK harus 16 digit",
+            "nik.max" => "NIK harus 16 digit",
+            "nohp.required" => "Nomor HP tidak boleh kosong",
+            "nohp.max" => "Nomor HP maksimal 13 digit",
+            "kodepoli.required" => "Kode Poli tidak boleh kosong",
+            "tanggalperiksa.required" => "Tanggal Periksa tidak boleh kosong",
+            "tanggalperiksa.date_format" => "Format Tanggal harus yyyy-mm-dd",
+            "tanggalperiksa.after" => "Tanggal Periksa tidak boleh mundur dari hari ini",
+            "tanggalperiksa.before" => "Tanggal Periksa hanya dapat dipilih maksimal $maxBookingDays hari ke depan (sampai $maxDate)",
+            "kodedokter.required" => "Kode Dokter tidak boleh kosong",
+            "jeniskunjungan.required" => "Jenis Kunjungan tidak boleh kosong",
+            "jeniskunjungan.in" => "Jenis Kunjungan tidak valid (1=Rujukan FKTP, 2=Rujukan Internal, 3=Kontrol, 4=Rujukan Antar RS)",
+            "nomorreferensi.required" => "Nomor Referensi/Nomor Rujukan tidak boleh kosong",
         ]);
 
         if ($validator->fails()) {
@@ -73,32 +75,34 @@ class PengambilanNomorController extends Controller
         ]);
 
         if (isset($request->norm)) {
-            $validator = Validator::make(
-                $request->all(), [
-                'norm' => 'numeric',
-            ], [
-                "norm.numeric" => "Nomor Rekam Medik Berupa Angka",
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 201,
-                        "message" => $validator->messages()->first()
-                    ]
-                ], 201);
-            }
-
             $checkPasien = $checkPasien->where([
                 "NORM" => $request->norm
             ])->first();
+
+            // Jika tidak ditemukan berdasarkan NORM, cari berdasarkan NIK
             if ($checkPasien == null) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 201,
-                        "message" => "Maaf, Nomor BPJS Dan Nomor Rekam Medik Yang Dimasukkan Tidak Sesuai, Untuk Informasi Lebih Lanjut Harap Datang Ke Front Office Untuk Pencocokan Data Terlebih Dahulu"
-                    ]
-                ], 201);
+                $checkByNIK = PasienKartuIdentitasModel::where([
+                    "JENIS" => 1,
+                    "NOMOR" => $request->nik
+                ])->first();
+
+                if ($checkByNIK != null) {
+                    // Cek apakah NORM dari NIK punya kartu BPJS dengan nomor yang sesuai
+                    $checkPasien = PasienKartuAsuransiModel::where([
+                        "NOMOR" => $request->nomorkartu,
+                        "JENIS" => 2,
+                        "NORM" => $checkByNIK->NORM
+                    ])->first();
+                }
+
+                if ($checkPasien == null) {
+                    return response()->json([
+                        "metadata" => [
+                            "code" => 201,
+                            "message" => "Data pasien tidak ditemukan. Silakan periksa kembali Nomor Kartu BPJS, NIK, dan Nomor RM Anda atau datang ke Front Office"
+                        ]
+                    ], 201);
+                }
             }
         } else {
             $checkPasien = $checkPasien->first();
@@ -106,7 +110,7 @@ class PengambilanNomorController extends Controller
                 return response()->json([
                     "metadata" => [
                         "code" => 202,
-                        "message" => "Maaf, Nomor BPJS Anda Belum Terdaftar Pada Sistem Kami, Harap Membuat Nomor Rekam Medik Terlebih Dahulu Atau Bisa Datang Langsung Ke Front Office RSIA Ananda"
+                        "message" => "Nomor BPJS belum terdaftar. Silakan mendaftar terlebih dahulu atau datang ke Front Office"
                     ]
                 ], 202);
             }
@@ -194,19 +198,33 @@ class PengambilanNomorController extends Controller
             "KODE_POLI" => $request->kodepoli,
             "STATUS" => 1
         ])->first();
+
+        if ($checkAntrian != null) {
+            return response()->json([
+                "metadata" => [
+                    "code" => 200,
+                    "message" => "Ok"
+                ],
+                "response" => [
+                    "nomorantrean" => $checkAntrian->KODE_POLI . " " . $checkAntrian->NOMOR_ANTRIAN,
+                    "angkaantrean" => $checkAntrian->NOMOR_ANTRIAN,
+                    "kodebooking" => $checkAntrian->ID,
+                    "norm" => $checkAntrian->NOMOR_RM,
+                    "namapoli" => $mappingPoli->KODE . " - " . $mappingPoli->DESKRIPSI,
+                    "namadokter" => $mappingDokter->NAMA,
+                    "estimasidilayani" => $checkAntrian->ESTIMASI_DILAYANI,
+                    "sisakuotajkn" => ($checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE) - $terdaftar,
+                    "kuotajkn" => $checkJadwalPraktek->KUOTA_ONSITE + $checkJadwalPraktek->ONLINE,
+                    "sisakuotanonjkn" => 0,
+                    "kuotanonjkn" => 0,
+                    "keterangan" => "Peserta Harap 30 Menit Lebih Awal Guna Pencatatan Administrasi dan Annamesis Awal."
+                ]
+            ]);
+        }
         /*=======================================================================================*/
 
         DB::beginTransaction();
         try {
-            if ($checkAntrian != null) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 201,
-                        "message" => "Nomor Antrean Hanya Dapat Diambil 1 Kali Pada Tanggal Yang Sama"
-                    ],
-                    "response" => $checkAntrian
-                ], 201);
-            }
 
             $new = new AntrianOnlineV2Model();
             $new->ID = AntrianOnlineV2Model::generateNOMOR();
