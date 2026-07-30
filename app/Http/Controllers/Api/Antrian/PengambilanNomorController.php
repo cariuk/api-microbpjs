@@ -23,13 +23,16 @@ class PengambilanNomorController extends Controller
 {
     function setData(Request $request)
     {
+        // Get max booking days from environment variable (default: 90 days)
+        $maxBookingDays = env('MAX_BOOKING_DAYS_AHEAD', 90);
+
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
             'nik' => 'required|min:16|max:16',
             'nohp' => 'required|max:13',
             'kodepoli' => 'required',
-            'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . date("Y-m-d", strtotime("+90 day")),
+            'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . date("Y-m-d", strtotime("+{$maxBookingDays} day")),
             'kodedokter' => 'required',
             'jampraktek' => 'required',
             'jeniskunjungan' => 'required|in:1,2,3,4', //{1 (Rujukan FKTP), 2 (Rujukan Internal), 3 (Kontrol), 4 (Rujukan Antar RS)},
@@ -46,8 +49,8 @@ class PengambilanNomorController extends Controller
             "kodepoli.required" => "Kode Poli Tidak Boleh Kosong",
             "tanggalperiksa.required" => "Tanggal Periksa Tidak Boleh Kosong",
             "tanggalperiksa.date_format" => "Format Tanggal Tidak Sesuai, format yang benar adalah yyyy-mm-dd",
-            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +90 Dari Tanggal " . date("Y-m-d"),
-            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +90" . date("Y-m-d"),
+            "tanggalperiksa.after" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +{$maxBookingDays} Dari Tanggal " . date("Y-m-d"),
+            "tanggalperiksa.before" => "Tanggal Periksa Hanya Boleh Dipilih H Sampai H +{$maxBookingDays} Dari Tanggal " . date("Y-m-d"),
             "kodedokter.required" => "Kode Dokter Tidak Boleh Kosong",
             "jeniskunjungan.required" => "Jenis Kunjungan Tidak Boleh Kosong",
             "jeniskunjungan.in" => "Jenis Request Hanya Boleh 1 = Pendaftaran | 2 = Poli",
