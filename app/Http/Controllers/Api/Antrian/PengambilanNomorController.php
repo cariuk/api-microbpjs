@@ -93,6 +93,18 @@ class PengambilanNomorController extends Controller
                         "JENIS" => 2,
                         "NORM" => $checkByNIK->NORM
                     ])->first();
+
+                    // Jika kartu BPJS belum terdaftar untuk NORM ini, insert kartu BPJS baru
+                    if ($checkPasien == null) {
+                        $newKartuBPJS = new PasienKartuAsuransiModel();
+                        $newKartuBPJS->NORM = $checkByNIK->NORM;
+                        $newKartuBPJS->NOMOR = $request->nomorkartu;
+                        $newKartuBPJS->JENIS = 2; // JENIS 2 untuk BPJS
+                        $newKartuBPJS->save();
+
+                        // Set checkPasien dengan data yang baru dibuat
+                        $checkPasien = $newKartuBPJS;
+                    }
                 }
 
                 if ($checkPasien == null) {
@@ -106,13 +118,35 @@ class PengambilanNomorController extends Controller
             }
         } else {
             $checkPasien = $checkPasien->first();
+
+            // Jika kartu BPJS belum terdaftar, cek berdasarkan NIK
             if ($checkPasien == null) {
-                return response()->json([
-                    "metadata" => [
-                        "code" => 202,
-                        "message" => "Nomor BPJS belum terdaftar. Silakan mendaftar terlebih dahulu atau datang ke Front Office"
-                    ]
-                ], 202);
+                // Cari pasien berdasarkan NIK
+                $checkByNIK = PasienKartuIdentitasModel::where([
+                    "JENIS" => 1,
+                    "NOMOR" => $request->nik
+                ])->first();
+
+                // Jika pasien ditemukan berdasarkan NIK, insert kartu BPJS
+                if ($checkByNIK != null) {
+                    // Insert kartu BPJS baru untuk pasien ini
+                    $newKartuBPJS = new PasienKartuAsuransiModel();
+                    $newKartuBPJS->NORM = $checkByNIK->NORM;
+                    $newKartuBPJS->NOMOR = $request->nomorkartu;
+                    $newKartuBPJS->JENIS = 2; // JENIS 2 untuk BPJS
+                    $newKartuBPJS->save();
+
+                    // Set checkPasien dengan data yang baru dibuat
+                    $checkPasien = $newKartuBPJS;
+                } else {
+                    // Jika NIK juga tidak ditemukan
+                    return response()->json([
+                        "metadata" => [
+                            "code" => 202,
+                            "message" => "Data pasien tidak ditemukan. Silakan mendaftar terlebih dahulu atau datang ke Front Office"
+                        ]
+                    ], 202);
+                }
             }
         }
         /*=======================================================================================*/
@@ -121,6 +155,7 @@ class PengambilanNomorController extends Controller
         $mappingPoli = MappingPoliModel::where([
             "KODE" => $request->kodepoli
         ])->first();
+
         if ($mappingPoli == null) {
             return response()->json([
                 "metadata" => [
@@ -223,6 +258,26 @@ class PengambilanNomorController extends Controller
         }
         /*=======================================================================================*/
 
+        /*Check Existing Pendaftaran untuk hari yang sama*/
+        $existingPendaftaran = PendaftaranModel::select(
+            'pendaftaran.NOMOR',
+            'pendaftaran.TANGGAL',
+            'antrian_ruangan.NOMORDOKTER',
+            'antrian_ruangan.TANGGAL as TANGGAL_ANTRIAN'
+        )
+        ->where('pendaftaran.NORM', $checkPasien->NORM)
+        ->whereDate('pendaftaran.TANGGAL', $request->tanggalperiksa)
+        ->where('pendaftaran.STATUS', 1)
+        ->join('pendaftaran.tujuan', 'tujuan.NOPEN', '=', 'pendaftaran.NOMOR')
+        ->join('pendaftaran.penjamin', 'penjamin.NOPEN', '=', 'pendaftaran.NOMOR')
+        ->join('pendaftaran.antrian_ruangan', 'antrian_ruangan.REF', '=', 'pendaftaran.NOMOR')
+        ->where('tujuan.RUANGAN', $checkJadwalPraktek->RUANGAN)
+        ->where('tujuan.SHIFT', $checkJadwalPraktek->SHIFT)
+        ->where('tujuan.DOKTER', $mappingDokter->DOKTER)
+        ->where('penjamin.JENIS', 2)
+        ->first();
+        /*=======================================================================================*/
+
         DB::beginTransaction();
         try {
 
@@ -250,48 +305,59 @@ class PengambilanNomorController extends Controller
                 $estimasi = null;
             }
 
-            //Pendaftaran Pasien
-            $pendaftaran = new PendaftaranModel();
-            $pendaftaran->NOMOR = PendaftaranModel::generateNOMOR(date("Y-m-d", strtotime($request->tanggalperiksa)));
-            $pendaftaran->NORM = $checkPasien->NORM;
-            $pendaftaran->TANGGAL = $tanggalPendaftaran;
-            $pendaftaran->DIAGNOSA_MASUK = "Z00.0";
-            $pendaftaran->OLEH = 1;
-            $pendaftaran->STATUS = 1;
-            $pendaftaran->save();
+            // Jika sudah ada pendaftaran, gunakan pendaftaran yang sudah ada
+            if ($existingPendaftaran != null) {
+                // Gunakan pendaftaran yang sudah ada
+                $nomorPendaftaran = $existingPendaftaran->NOMOR;
+                $nomorAntrian = $existingPendaftaran->NOMORDOKTER;
+            } else {
+                // Buat pendaftaran baru
+                //Pendaftaran Pasien
+                $pendaftaran = new PendaftaranModel();
+                $pendaftaran->NOMOR = PendaftaranModel::generateNOMOR(date("Y-m-d", strtotime($request->tanggalperiksa)));
+                $pendaftaran->NORM = $checkPasien->NORM;
+                $pendaftaran->TANGGAL = $tanggalPendaftaran;
+                $pendaftaran->DIAGNOSA_MASUK = "Z00.0";
+                $pendaftaran->OLEH = 1;
+                $pendaftaran->STATUS = 1;
+                $pendaftaran->save();
 
-            //Pendaftaran Via
-            $viapendaftaran = new PendaftaranViaModel();
-            $viapendaftaran->NOPEN = $pendaftaran->NOMOR;
-            $viapendaftaran->JENIS = 4;
-            $viapendaftaran->save();
+                //Pendaftaran Via
+                $viapendaftaran = new PendaftaranViaModel();
+                $viapendaftaran->NOPEN = $pendaftaran->NOMOR;
+                $viapendaftaran->JENIS = 4;
+                $viapendaftaran->save();
 
-            //Tujuan Pendaftaran
-            $tujuan = new TujuanModel();
-            $tujuan->NOPEN = $pendaftaran->NOMOR;
-            $tujuan->RUANGAN = $checkJadwalPraktek->RUANGAN;
-            $tujuan->SMF = $mappingPoli->SMF;
-            $tujuan->SHIFT = $checkJadwalPraktek->SHIFT;
-            $tujuan->DOKTER = $mappingDokter->DOKTER;
-            $tujuan->save();
+                //Tujuan Pendaftaran
+                $tujuan = new TujuanModel();
+                $tujuan->NOPEN = $pendaftaran->NOMOR;
+                $tujuan->RUANGAN = $checkJadwalPraktek->RUANGAN;
+                $tujuan->SMF = $mappingPoli->SMF;
+                $tujuan->SHIFT = $checkJadwalPraktek->SHIFT;
+                $tujuan->DOKTER = $mappingDokter->DOKTER;
+                $tujuan->save();
 
-            //Penjamin Pendaftaran
-            $penjamin = new PenjaminModel();
-            $penjamin->NOPEN = $pendaftaran->NOMOR;
-            $penjamin->JENIS = 2;
-            $penjamin->NOMOR = "";
-            $penjamin->KELAS = 0;
-            $penjamin->save();
+                //Penjamin Pendaftaran
+                $penjamin = new PenjaminModel();
+                $penjamin->NOPEN = $pendaftaran->NOMOR;
+                $penjamin->JENIS = 2;
+                $penjamin->NOMOR = "";
+                $penjamin->KELAS = 0;
+                $penjamin->save();
 
-            $antrian = AntrianRuanganModel::select(
-                "TANGGAL",
-                "NOMORDOKTER as NOMOR"
-            )->where([
-                "REF" => $pendaftaran->NOMOR
-            ])->first();
+                $antrian = AntrianRuanganModel::select(
+                    "TANGGAL",
+                    "NOMORDOKTER as NOMOR"
+                )->where([
+                    "REF" => $pendaftaran->NOMOR
+                ])->first();
 
-            $new->NOPEN = $pendaftaran->NOMOR;
-            $new->NOMOR_ANTRIAN = $antrian->NOMOR; /*Antrian Poli*/
+                $nomorPendaftaran = $pendaftaran->NOMOR;
+                $nomorAntrian = $antrian->NOMOR;
+            }
+
+            $new->NOPEN = $nomorPendaftaran;
+            $new->NOMOR_ANTRIAN = $nomorAntrian; /*Antrian Poli*/
             $new->ESTIMASI_DILAYANI = $estimasi == null ? Carbon::createFromTimestamp(strtotime($tanggalPendaftaran))
                     ->addMinutes(5 * $new->NOMOR_ANTRIAN)->timestamp * 1000 : $estimasi;
             /*==========================================================*/
