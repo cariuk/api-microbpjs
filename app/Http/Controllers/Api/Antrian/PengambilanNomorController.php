@@ -268,12 +268,12 @@ class PengambilanNomorController extends Controller
         ->where('pendaftaran.NORM', $checkPasien->NORM)
         ->whereDate('pendaftaran.TANGGAL', $request->tanggalperiksa)
         ->where('pendaftaran.STATUS', 1)
-        ->join('pendaftaran.tujuan', 'tujuan.NOPEN', '=', 'pendaftaran.NOMOR')
+        ->join('pendaftaran.tujuan_pasien', 'tujuan_pasien.NOPEN', '=', 'pendaftaran.NOMOR')
         ->join('pendaftaran.penjamin', 'penjamin.NOPEN', '=', 'pendaftaran.NOMOR')
         ->join('pendaftaran.antrian_ruangan', 'antrian_ruangan.REF', '=', 'pendaftaran.NOMOR')
-        ->where('tujuan.RUANGAN', $checkJadwalPraktek->RUANGAN)
-        ->where('tujuan.SHIFT', $checkJadwalPraktek->SHIFT)
-        ->where('tujuan.DOKTER', $mappingDokter->DOKTER)
+        ->where('tujuan_pasien.RUANGAN', $checkJadwalPraktek->RUANGAN)
+        ->where('tujuan_pasien.SHIFT', $checkJadwalPraktek->SHIFT)
+        ->where('tujuan_pasien.DOKTER', $mappingDokter->DOKTER)
         ->where('penjamin.JENIS', 2)
         ->first();
         /*=======================================================================================*/
