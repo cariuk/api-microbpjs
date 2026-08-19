@@ -28,10 +28,15 @@ class PengambilanNomorController extends Controller
         $maxBookingDays = config('antrian.max_booking_days_ahead', 90);
         $maxDate = date("Y-m-d", strtotime("+$maxBookingDays day"));
 
+        // Validasi NIK hanya required jika tidak ada NORM
+        $nikValidation = isset($request->norm) && !empty($request->norm)
+            ? 'nullable|min:16|max:16'
+            : 'required|min:16|max:16';
+
         $validator = Validator::make(
             $request->all(), [
             'nomorkartu' => 'required|min:13|max:13',
-            'nik' => 'required|min:16|max:16',
+            'nik' => $nikValidation,
             'nohp' => 'required|max:13',
             'kodepoli' => 'required',
             'tanggalperiksa' => 'required|date_format:Y-m-d|after:' . date("Y-m-d", strtotime("-1 day")) . '|before:' . $maxDate,
