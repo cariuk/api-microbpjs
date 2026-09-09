@@ -46,6 +46,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapBpjsRoutes();
+
         //
     }
 
@@ -76,5 +78,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "bpjs" routes for the application.
+     *
+     * These routes are for BPJS web service without 'api/' prefix.
+     *
+     * @return void
+     */
+    protected function mapBpjsRoutes()
+    {
+        Route::middleware('api')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/bpjs.php'));
     }
 }
